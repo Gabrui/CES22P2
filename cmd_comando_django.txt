@@ -1,0 +1,9 @@
+Precisa estar no diretorio
+mudar de direitorio -> cd .\diretorio
+
+Runserver -> python manage.py runserver
+
+stopserver -> Segurar ctrl e aperta a tecla C.
+
+Criar projeto -> django-admin startproject projectname
+
