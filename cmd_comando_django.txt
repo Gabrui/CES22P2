@@ -7,3 +7,7 @@ stopserver -> Segurar ctrl e aperta a tecla C.
 
 Criar projeto -> django-admin startproject projectname
 
+Criar app -> python manage.py startapp appname
+
+sincronizar o codigo ao database -> python manage.py migrate
+
