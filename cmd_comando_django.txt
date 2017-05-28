@@ -11,3 +11,45 @@ Criar app -> python manage.py startapp appname
 
 sincronizar o codigo ao database -> python manage.py migrate
 
+instalar os apps (use sempre de depois de criar models) -> python manage.py makemigrations appname
+
+Criar um admin -> python manage.py createsuperuser
+Preencher com nome do login que voce vai usar
+com seu email e com uma senha segura. Vai na url /admin/
+
+
+
+
+ir para o cmd do Django para mexer no database -> python manage.py shell
+
+_________________________________________________________________________
+
+No cmd do Django: 
+
+importar models -> from appname.models import classname, classname2, etc, classnameN
+
+Listar todos os objetos de uma classe -> classname.objects.all()
+
+Criar um objecto ->  variable = classname(inputs_da_classe)
+
+Salvar um objecto no database -> variable.save()
+
+Ver a id de um objecto -> variablename.id
+
+ver a primaryKey de um objecto -> variable.pk
+
+Obs: id = primaryKey
+
+Ver um objecto especifico que tenha o id igual a IDnumber -> classname.objects.filter(id = IDnumber)
+
+Listar objectos que tem variavel "variable" que armazena uma string que começa com "firstname" -> classname.objects.filter(variable__startswith = 'firstname')
+ 
+Sair do cmd do Django -> exit()
+
+
+
+
+
+
+
+
