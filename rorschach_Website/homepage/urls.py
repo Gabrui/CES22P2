@@ -16,6 +16,7 @@ urlpatterns = [
         #a chamada padrao responde com a funcao index
         # a funcao index tah no arquivo views
         url(r"^$", views.index, name = "index"),
+        url(r"^Login/$", views.login, name = "login"),
         url(r"^Register/$"), views.register, name = "register"),
         # /appname/idnumber/
         #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")
