@@ -5,7 +5,7 @@ Created on Sat May 27 20:07:10 2017
 @author: Dylan N. Sugimoto
 """
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
@@ -17,8 +17,9 @@ urlpatterns = [
         # a funcao index tah no arquivo views
         url(r"^$", views.index, name = "index"),
         url(r"^Login/$", views.login, name = "login"),
-        url(r"^Register/$"), views.register, name = "register"),
-        url(r"^SingUp/$"), include("FichaUsuario.urls")),
+        url(r"^Register/$", views.register, name = "register"),
+        url(r"^SingUp/$", include("FichaUsuario.urls")),
+        url(r"^perfil/$", views.perfil, name = "perfil"),
         # /appname/idnumber/
         #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")
         #passing object_id to use as variable in functionname

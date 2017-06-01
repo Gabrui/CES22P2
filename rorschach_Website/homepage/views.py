@@ -13,3 +13,7 @@ def index(request):
 def register(request):
     
     return render(request, "homepage/register.html")
+
+def perfil(request):
+    
+    return render(request, "homepage/perfil.htmil")
