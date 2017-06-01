@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat May 27 20:07:10 2017
+Created on Thu Jun  1 15:44:38 2017
 
 @author: Dylan N. Sugimoto
 """
+
+
 
 from django.conf.urls import url
 from . import views
@@ -16,9 +18,7 @@ urlpatterns = [
         #a chamada padrao responde com a funcao index
         # a funcao index tah no arquivo views
         url(r"^$", views.index, name = "index"),
-        url(r"^Login/$", views.login, name = "login"),
-        url(r"^Register/$"), views.register, name = "register"),
-        url(r"^SingUp/$"), include("FichaUsuario.urls")),
+        url(r"^SingUp/$", views.singup, name = "singup"),
         # /appname/idnumber/
         #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")
         #passing object_id to use as variable in functionname
