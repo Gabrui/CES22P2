@@ -10,6 +10,9 @@ def index(request):
     #retorna a pagina principal (html)
     return render(request, "homepage/homepage.html")
 
+def login(request):
+    pass
+
 def register(request):
     
     return render(request, "homepage/register.html")
