@@ -5,6 +5,7 @@ from django.views.generic import View
 from .forms import UserForm, loginForm
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
+from .models import UserInfo
 # Create your views here.
 
 
@@ -26,15 +27,13 @@ class loginUser(View):
     def post(self, request):
         
         form = self.form_class(request.POST)
-        #pegando todos os usuarios no database
-        listUsers = User.objects.all()
         #verificar o username e o email.
         #gerar processo de erro caso haja um igual
-        for user in listUsers: 
-            if form.cleaned_data['login'] == user.email_account:
-                findUser = user
-        
-        user = authenticate(email_account = findUser.email_account, password = findUser.password) 
+        form.is_valid()
+        username = form.cleaned_data["login"]
+        password = form.cleaned_data["password"]
+        user = authenticate(username = username, password = password)
+        print(user)
         if user is not None:
                 #se o usuario existe
                 if user.is_active:
@@ -42,7 +41,7 @@ class loginUser(View):
                     #logar o usuario
                     login(request, user)
                     #redicionar o usuario para a pagina de perfil
-                    return redirect("homepage: perfil")
+                    return redirect("/homepage/perfil/")
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
@@ -50,7 +49,7 @@ class loginUser(View):
         return render(request, self.template_name, {'form': form})
 #-----------------------Fim da Classe loginUser--------------------------------  
   
-class singUp(View):
+class signUp(View):
     """
         representa o cadastro do usuario.
     """
@@ -75,7 +74,7 @@ class singUp(View):
         #basicamente verifica caracteres estranhos.
         print("HI")
         if form.is_valid():
-            print("Hello")
+            print("valid")
             #cria um objeto form,
             #mas nao salva as informacoes no database
             user = form.save(commit = False)
@@ -94,15 +93,23 @@ class singUp(View):
             user.gender = form.cleaned_data['gender']
             #salva as informacoes do usuario no database
             user.save()
+            
+            created_user = User.objects.create_user(username = user.username,
+                                     email = user.email_account,password=password)
+            created_user.save()
             #Aqui acaba o processo de registro do usuario.
             
             #verifica no database se o usuario existe.
             #retorna um objecto User do database
+            print(user.username)
+            print(password)
             user = authenticate(username = user.username, password = password)
-            
+            print(user)
             if user is not None:
+                print("authenticated")
                 #se o usuario existe
                 if user.is_active:
+                    print("active")
                     #a conta do usuario nao esta banida
                     #logar o usuario
                     login(request, user)

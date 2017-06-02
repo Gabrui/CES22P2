@@ -64,7 +64,7 @@ body, html {
     <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
     <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
     <a onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i>LOGIN</a>
-    <a href="./singUp/singUp/" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> Sing Up</a>
+    <a href="./signUp/signUp/" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> Sign Up</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
       <i class="fa fa-search"></i>
     </a>
@@ -76,7 +76,7 @@ body, html {
     <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>
     <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
     <a href="#" class="w3-bar-item w3-button" onclick="toggleFunction();document.getElementById('id01').style.display='block'">LOGIN</a>
-    <a href="./singUp/singUp/" class="w3-bar-item w3-button" onclick="toggleFunction()" >Sing Up</a>
+    <a href="./signUp/signUp/" class="w3-bar-item w3-button" onclick="toggleFunction()" >Sign Up</a>
     <a href="#" class="w3-bar-item w3-button">SEARCH</a>
   </div>
 </div>
@@ -89,7 +89,8 @@ body, html {
         <img src="img_avatar4.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
       </div>
 
-      <form class="w3-container" action="./login/">
+      <form class="w3-container" action="./loginUser/loginUser/" method="post">
+          {% csrf_token %}
         <div class="w3-section">
           <label><b>Username</b></label>
           <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="login" required>

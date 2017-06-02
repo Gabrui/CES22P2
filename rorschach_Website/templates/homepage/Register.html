@@ -7,7 +7,7 @@
 <body>
 
 <header class="w3-container w3-teal">
-  <h1>Sing Up</h1>
+  <h1>Sign Up</h1>
 </header>
 
 <div class="w3-container w3-half w3-margin-top">
@@ -15,8 +15,11 @@
 <form class="w3-container w3-card-4" action="." method="post">
 {% csrf_token %}
 <p>
+<input id="name" class="w3-input" type="text" name="name" style="width:90%" required>
+<label for="name" >Name</label></p>
+<p>
 <input id="username" class="w3-input" type="text" name="username" style="width:90%" required>
-<label for="username" >Name</label></p>
+<label for="username" >Username</label></p>
 <p>
 <input id="password" class="w3-input" type="password" name="password" style="width:90%" required>
 <label>Password</label></p>

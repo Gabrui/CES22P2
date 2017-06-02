@@ -8,9 +8,12 @@ Created on Thu Jun  1 16:49:05 2017
 from .models import UserInfo
 from django import forms
 from django.core.validators import EmailValidator
+from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):
     
+    name = forms.CharField(label = "name", max_length = 250)
+    username = forms.CharField(label = "username", max_length = 250)
     age = forms.IntegerField(min_value = 0, max_value = 130)
     email_account = forms.EmailField(label = "email_account",max_length = 150, 
                                      required = False,
@@ -25,7 +28,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         #informacao sobre a classe
         model = UserInfo
-        fields = ['username', 'email_account', 'password', 'country', 
+        fields = ['name','username', 'email_account', 'password', 'country', 
                   'home_state_adress', 'religion','civil_status', 'profession',
                   'gender', 'age']
     def clean(self):
@@ -33,7 +36,7 @@ class UserForm(forms.ModelForm):
         cleaned_data = super(UserForm,self).clean()
         email = cleaned_data.get("email_account")
         user = UserInfo.objects.filter(email_account = email)
-        if user is not None:
+        if user:
             print("error2")
             print(user)
             raise forms.ValidationError("This email account already exist.")
@@ -48,5 +51,5 @@ class loginForm(forms.ModelForm):
     
     class Meta:
         
-        model = UserInfo
+        model = User
         fields = ['login', 'password']

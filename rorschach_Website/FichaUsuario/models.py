@@ -22,7 +22,8 @@ class UserInfo(AbstractBaseUser):
         album_picture: nome do album que guarda as foto do usuario
         age: idedade do usuario
     """
-    username = models.CharField(max_length = 250, unique=True, default = "myusername")
+    name = models.CharField(max_length = 250)
+    username = models.CharField(max_length = 250, unique = True,default = "myusername")
     email_account = models.EmailField(max_length = 250, unique=True, default = "myaccount@emaildomain.com")
     gender = models.CharField(max_length = 30)
     country = models.CharField(max_length = 250)
@@ -33,12 +34,9 @@ class UserInfo(AbstractBaseUser):
     profession = models.CharField(max_length = 100)
     album_picture = models.CharField(max_length = 10000)
     age = models.IntegerField()
-    password = models.CharField(max_length = 100, default = "mypassword")
     
-    USERNAME_FIELD = "username"
-    EMAIL_FIELD = "email_account"
-    PASSWORD_FIELD = "password"
-    
+    USERNAME_FIELD = 'username'
+
     def __str__(self):
         
         return self.username + " AND " +self.email_account
