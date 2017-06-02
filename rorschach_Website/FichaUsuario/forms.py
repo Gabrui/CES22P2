@@ -5,7 +5,7 @@ Created on Thu Jun  1 16:49:05 2017
 @author: Dylan N. Sugimoto
 """
 
-from django.contrib.auth.models import User
+from .models import UserInfo
 from django import forms
 from django.core.validators import EmailValidator
 
@@ -23,8 +23,30 @@ class UserForm(forms.ModelForm):
     gender = forms.CharField(label="gender", max_length = 10)
     password = forms.CharField(widget = forms.PasswordInput)
     class Meta:
-        #information about your class
-        model = User
+        #informacao sobre a classe
+        model = UserInfo
         fields = ['username', 'email_account', 'password', 'country', 
                   'home_state_adress', 'religion','civil_status', 'profession',
                   'gender', 'age']
+    def clean(self):
+        #metodo para verificar validade de dados do usuario
+        cleaned_data = super(UserForm,self).clean()
+        email = cleaned_data.get("email_account")
+        user = UserInfo.objects.filter(email_account = email)
+        if user is not None:
+            print("error2")
+            print(user)
+            raise forms.ValidationError("This email account already exist.")
+        
+        return cleaned_data
+
+
+class loginForm(forms.ModelForm):
+    
+    password = forms.CharField(widget = forms.PasswordInput)
+    login = forms.CharField(label = "login", max_length = 150)
+    
+    class Meta:
+        
+        model = UserInfo
+        fields = ['login', 'password']

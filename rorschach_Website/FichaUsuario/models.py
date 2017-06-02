@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 
 # Create your models here.
 #Django transforma cada classe em uma tabela
@@ -6,7 +7,7 @@ from django.db import models
 #isso eh criado no database quando sincronizamos
 #o database com o codigo
 
-class UserInfo(models.Model):
+class UserInfo(AbstractBaseUser):
     """
         Guarda as informacoes do usuario.
         name: nome do usuario
@@ -21,8 +22,8 @@ class UserInfo(models.Model):
         album_picture: nome do album que guarda as foto do usuario
         age: idedade do usuario
     """
-    name = models.CharField(max_length = 250)
-    email_account = models.CharField(max_length = 250)
+    username = models.CharField(max_length = 250, unique=True, default = "myusername")
+    email_account = models.EmailField(max_length = 250, unique=True, default = "myaccount@emaildomain.com")
     gender = models.CharField(max_length = 30)
     country = models.CharField(max_length = 250)
     home_state_address = models.CharField(max_length = 250)
@@ -32,10 +33,15 @@ class UserInfo(models.Model):
     profession = models.CharField(max_length = 100)
     album_picture = models.CharField(max_length = 10000)
     age = models.IntegerField()
+    password = models.CharField(max_length = 100, default = "mypassword")
+    
+    USERNAME_FIELD = "username"
+    EMAIL_FIELD = "email_account"
+    PASSWORD_FIELD = "password"
     
     def __str__(self):
         
-        return self.name + " AND " +self.email_account
+        return self.username + " AND " +self.email_account
     
 class Album (models.Model):
     """

@@ -10,13 +10,6 @@ def index(request):
     #retorna a pagina principal (html)
     return render(request, "homepage/homepage.html")
 
-def login(request):
-    pass
-
-def register(request):
-    
-    return render(request, "homepage/register.html")
-
 def perfil(request):
     
-    return render(request, "homepage/perfil.htmil")
+    return render(request, "homepage/perfil.html")

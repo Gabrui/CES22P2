@@ -12,8 +12,8 @@
 
 <div class="w3-container w3-half w3-margin-top">
 
-<form class="w3-container w3-card-4" action="/SingUp/" method="post">
-
+<form class="w3-container w3-card-4" action="." method="post">
+{% csrf_token %}
 <p>
 <input id="username" class="w3-input" type="text" name="username" style="width:90%" required>
 <label for="username" >Name</label></p>

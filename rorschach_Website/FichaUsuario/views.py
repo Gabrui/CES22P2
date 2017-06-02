@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, User
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.views.generic import View
 from .forms import UserForm, loginForm
 from django.forms import ValidationError
@@ -16,7 +17,8 @@ class loginUser(View):
     
     form_class = loginForm
     
-    template_name = "homepage/"
+    template_name = "homepage/homepage.html"
+    
     def get(self, request):
         
         form = self.form_class(None)
@@ -29,10 +31,10 @@ class loginUser(View):
         #verificar o username e o email.
         #gerar processo de erro caso haja um igual
         for user in listUsers: 
-            if form.cleaned_data['login'] == user.username() or form.cleaned_data['login'] == user.email_account:
+            if form.cleaned_data['login'] == user.email_account:
                 findUser = user
         
-        user = authenticate(username = findUser.username, password = findUser.password) 
+        user = authenticate(email_account = findUser.email_account, password = findUser.password) 
         if user is not None:
                 #se o usuario existe
                 if user.is_active:
@@ -48,7 +50,7 @@ class loginUser(View):
         return render(request, self.template_name, {'form': form})
 #-----------------------Fim da Classe loginUser--------------------------------  
   
-class singup(View):
+class singUp(View):
     """
         representa o cadastro do usuario.
     """
@@ -56,7 +58,7 @@ class singup(View):
     #definido no arquivo forms da pasta FichaUsuario
     form_class = UserForm
     #define o template da pagina do formulario
-    template_name = 'homepage/Register.html'
+    template_name = 'homepage/register.html'
     
     def get(self,request):
         #mostra uma pagina formulario em branco
@@ -69,19 +71,11 @@ class singup(View):
         
         #passando as informacoes para o formulario
         form = self.form_class(request.POST)
-        #pegando todos os usuarios no database
-        listUsers = User.objects.all()
-        #verificar o username e o email.
-        #gerar processo de erro caso haja um igual
-        for user in listUsers: 
-            if form.cleaned_data['username'] == user.username():
-                form.add_error("username",ValidationError(_("Username already exist"), code = "invalid"))
-            if form.cleaned_data['email_account'] == user.email_account():
-                form.add_error("email_account",ValidationError(_("Email Account already exist"), code = "invalid"))
         #validar as informacoes
         #basicamente verifica caracteres estranhos.
+        print("HI")
         if form.is_valid():
-            
+            print("Hello")
             #cria um objeto form,
             #mas nao salva as informacoes no database
             user = form.save(commit = False)
@@ -94,10 +88,10 @@ class singup(View):
             user.country = form.cleaned_data['country']
             user.email_account = form.cleaned_data['email_account']
             user.home_state_adress = form.cleaned_data['home_state_adress']
-            user.religion = form.clean_data['religion']
-            user.civil_status = form.clean_data['civil_status']
-            user.profession = form.clean_data['profession']
-            user.gender = form.clean_data['gender']
+            user.religion = form.cleaned_data['religion']
+            user.civil_status = form.cleaned_data['civil_status']
+            user.profession = form.cleaned_data['profession']
+            user.gender = form.cleaned_data['gender']
             #salva as informacoes do usuario no database
             user.save()
             #Aqui acaba o processo de registro do usuario.
@@ -113,7 +107,7 @@ class singup(View):
                     #logar o usuario
                     login(request, user)
                     #redicionar o usuario para a pagina de perfil
-                    return redirect("homepage: perfil")
+                    return redirect("/homepage/perfil/")
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
