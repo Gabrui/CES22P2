@@ -19,8 +19,10 @@ urlpatterns = [
         # a funcao index tah no arquivo views
         
         #/FichaUsuario/singUp/
+        #url para tratar o cadastro do usuario, executar os metodos da classe singUp
         url(r"^signUp/", views.signUp.as_view(), name = "signUp"),
         #/FichaUsuario/login/
+        #url para tratar o login do usuario, executar os metodos da classe login
         url(r"^loginUser/", views.loginUser.as_view(), name = 'loginUser'),
         # /appname/idnumber/
         #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")

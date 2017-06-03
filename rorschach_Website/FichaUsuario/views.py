@@ -15,27 +15,34 @@ def index(request):
 #-----------------------------fim do metodo index------------------------------
 
 class loginUser(View):
-    
+    """
+        Representa o metodo de login
+    """
+    #criando formulario de login
     form_class = loginForm
-    
+    #defindo pagina html do login
     template_name = "homepage/homepage.html"
     
     def get(self, request):
-        
+        #resposta ao request de get do usuario
+        #cria um formulario
         form = self.form_class(None)
+        #retorna um formulario login em branco
         return render(request, self.template_name, {'form': form})
     def post(self, request):
-        
+        #resposta ao request de post do usuario
+        #passa as informacoes do POST para o formulario
         form = self.form_class(request.POST)
-        #verificar o username e o email.
-        #gerar processo de erro caso haja um igual
+        #verificar se tem caracteres estranhos
         form.is_valid()
+        #pegar o username e password passados no preenchimento do formulario
         username = form.cleaned_data["login"]
         password = form.cleaned_data["password"]
+        #procurar usuario
         user = authenticate(username = username, password = password)
         print(user)
         if user is not None:
-                #se o usuario existe
+                #se existir o usuario e a senha estiver correta
                 if user.is_active:
                     #a conta do usuario nao esta banida
                     #logar o usuario
@@ -45,7 +52,7 @@ class loginUser(View):
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
-        #mostrar um formulario em branco
+        #ir para a homepage
         return render(request, self.template_name, {'form': form})
 #-----------------------Fim da Classe loginUser--------------------------------  
   

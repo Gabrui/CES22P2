@@ -16,11 +16,12 @@ urlpatterns = [
         #a chamada padrao responde com a funcao index
         # a funcao index tah no arquivo views
         url(r"^$", views.index, name = "index"),
+        #url para tratar do login, olhar na urls do app FichaUsuario
         url(r"^loginUser/", include("FichaUsuario.urls")),
+        #url para tratar do cadastro, olhar na urls do app FicaUsuario
         url(r"^signUp/", include("FichaUsuario.urls")),
+        #url para direcionar para o perfil, executar metodo views.perfil
         url(r"^perfil/", views.perfil, name = "perfil"),
-        # /appname/idnumber/
-        #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")
-        #passing object_id to use as variable in functionname
+       
         
         ]
