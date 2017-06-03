@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r"^homepage/", include("homepage.urls")),
     url(r"^$", include("homepage.urls")),
+    url(r"^perfil/", include("homepage.urls")),
+    url(r"^signup/",include("homepage.urls")),
+    url(r"^login/",include("homepage.urls")),
 ]
