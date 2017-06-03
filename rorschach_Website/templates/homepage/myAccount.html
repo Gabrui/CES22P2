@@ -12,7 +12,7 @@
 
 <div class="w3-container w3-half w3-margin-top">
 
-<form action="{% url 'homepage:perfil' pk%}" class="w3-container w3-card-4" method="post">
+<form action="" enctype='multipart/form-data' class="w3-container w3-card-4" method="post">
 {% csrf_token %}
     {{form.as_p}}
     <input type="submit" value="Update" name='_save'/>
