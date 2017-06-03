@@ -28,6 +28,6 @@ urlpatterns = [
         url(r"^perfil/(?P<pk>[0-9]+)/$", 
             views.PerfilView.as_view(),
             name = "perfil"),
-        url(r"^myAccount/(?P<pk>[0-9]+)/",views.UpdateAccount.as_view(),name ="myAccount"),
+        url(r"^(?P<pk>[0-9]+)/myAccount/",views.UpdateAccount.as_view(),name ="myAccount"),
         
         ]

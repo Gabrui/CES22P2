@@ -43,3 +43,25 @@ class UpdateAccount(UpdateView):
                   'home_state_address', 'religion','civil_status', 'profession',
                   'gender', 'age','music_like','avatar']
     
+    def get_context_data(self,**kwargs):
+        context = super(UpdateAccount,self).get_context_data(**kwargs)
+        context['pk'] = self.object.pk
+        context['username'] = self.object.username
+        context['avatar'] = self.object.avatar.url
+        context['profession'] = self.object.profession
+        context['home_state_address'] = self.object.home_state_address
+        context['country'] = self.object.country
+        context['age'] = self.object.age
+        context['music_like'] = self.object.music_like
+        context['password'] = self.object.password
+        context['email_account'] = self.object.email_account
+        context['religion'] = self.object.religion
+        context['name'] = self.object.name
+        context['civil_status'] = self.object.civil_status
+        context['gender'] = self.object.gender
+         
+        return context
+        
+        
+        
+        
