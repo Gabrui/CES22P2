@@ -10,6 +10,8 @@ Created on Thu Jun  1 15:44:38 2017
 from django.conf.urls import url
 from . import views
 
+appname = "FichaUsuario"
+
 urlpatterns = [
         # /homepage/
         #^ define o inicio

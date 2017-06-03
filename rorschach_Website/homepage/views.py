@@ -1,15 +1,25 @@
-from django.http import HttpResponse
+from django.views.generic import View
 from django.shortcuts import render
 
 # Create your views here.
 #This File receive client request and send back the response
 
-def index(request):
+class IndexView(View):
     
-    #return HttpResponse("<h1>This is the homepage<h1/>")
-    #retorna a pagina principal (html)
-    return render(request, "homepage/homepage.html")
+    #nome do template da pagina em html
+    template_name = "homepage/homepage.html"
+    
+    def get(self,request):
+        #metodo de resposta ao request get do cliente
+        #retorna a pagina html
+        return render(request, self.template_name)
 
-def perfil(request):
+class PerfilView(View):
     
-    return render(request, "homepage/perfil.html")
+    #nome do template da pagina em html
+    template_name = "homepage/perfil.html"
+    
+    def get(self,request):
+        #metodo de resposta ao request get do cliente
+        #retorna a pagina html
+        return render(request, self.template_name)
