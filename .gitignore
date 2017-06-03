@@ -1,5 +1,3 @@
 Rorschach/nbproject/private/*
-rorschach_Website/homepage/__pycache__/*
-rorschach_Website/FichaUsuario/__pycache__/*
-rorschach_Website/rorschach_Website/__pycache__/*
+*.pyc
 
