@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- W3.CSS Template. Disponivel em https://www.w3schools.com/w3css/tryw3css_examples_login.htm-->
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<header class="w3-container w3-teal">
+  <h1>My account</h1>
+</header>
+
+<div class="w3-container w3-half w3-margin-top">
+
+<form class="w3-container w3-card-4" action="." method="post">
+{% csrf_token %}
+<p>
+<input id="name" class="w3-input" type="text" name="name" style="width:90%" value='{{UserInfo.name}}' required>
+<label for="name" >Name</label></p>
+<p>
+<input id="username" class="w3-input" type="text" name="username" style="width:90%" value ='{{UserInfo.username}}' required>
+<label for="username" >Username</label></p>
+<p>
+<input id="password" class="w3-input" type="password" name="password" style="width:90%" value ='{{UserInfo.password}}' required>
+<label>Password</label></p>
+
+<p>
+<input id="age" class="w3-input" type="number" name="age" style="width:90%" value ='{{UserInfo.age}}' required>
+<label>age</label></p>
+
+<p>
+<input id="email_account" name="email_account" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.email_account}}' required>
+<label>email account</label></p>
+
+<p>
+<input id="country" name="country" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.country}}' required>
+<label>country</label></p>
+
+<p>
+<input id="home_state_adress" name="home_state_address" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.home_state_address}}' required>
+<label>home state adress</label></p>
+
+<p>
+<input id="religion" name="religion" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.religion}}' required>
+<label>religion</label></p>
+
+<p>
+<input id="civil_status" name="civil_status" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.civil_status}}' required>
+<label>civil status</label>
+</p>
+<p>
+<input id="gender" name="gender" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.gender}}' required>
+<label>gender</label></p>
+<p>
+<input id="music_like" name="music_like" class="w3-input" type="text" style="width:90%" value ='{{UserInfo.music_like}}' >
+<label>music like</label></p>
+<p>
+<button class="w3-button w3-section w3-teal w3-ripple"> Save </button></p>
+
+</form>
+
+</div>
+
+</body>
+</html> 

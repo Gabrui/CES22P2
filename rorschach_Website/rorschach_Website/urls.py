@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
         
@@ -25,3 +28,10 @@ urlpatterns = [
     url(r"^signup/",include("homepage.urls")),
     url(r"^login/",include("homepage.urls")),
 ]
+
+if settings.DEBUG:
+    #Se tiver no modo developer
+    #olhar o diretorio de midia do computador
+    #definido no arquivo settings pela variavel MEDIA_ROOT
+    urlpatterns += static(settings.STATIC_URL,document_root = settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

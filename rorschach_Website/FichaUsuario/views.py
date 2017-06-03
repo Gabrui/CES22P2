@@ -47,8 +47,14 @@ class loginUser(View):
                     #a conta do usuario nao esta banida
                     #logar o usuario
                     login(request, user)
+                    #pegar primary key do objecto UserInfo
+                    #correspondente a esse usuario
+                    #procurar o userinfo correspondente
+                    userinfo = UserInfo.objects.filter(username = user.username)
+                    #pegar a primery key ou pk
+                    pk = userinfo[0].pk
                     #redicionar o usuario para a pagina de perfil
-                    return redirect("/homepage/perfil/")
+                    return redirect("/homepage/perfil/"+str(pk)+"/")
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
@@ -93,16 +99,20 @@ class signUp(View):
             user.age = form.cleaned_data['age']
             user.country = form.cleaned_data['country']
             user.email_account = form.cleaned_data['email_account']
-            user.home_state_adress = form.cleaned_data['home_state_adress']
+            user.home_state_address = form.cleaned_data['home_state_adress']
             user.religion = form.cleaned_data['religion']
             user.civil_status = form.cleaned_data['civil_status']
             user.profession = form.cleaned_data['profession']
             user.gender = form.cleaned_data['gender']
             #salva as informacoes do usuario no database
             user.save()
-            
+            #pegar primary key desse objecto UserInfo salvo
+            pk = user.pk
+            #criar objeto usuario
+            #e passar as informacoes basicas
             created_user = User.objects.create_user(username = user.username,
                                      email = user.email_account,password=password)
+            #salvar usuario
             created_user.save()
             #Aqui acaba o processo de registro do usuario.
             
@@ -121,7 +131,7 @@ class signUp(View):
                     #logar o usuario
                     login(request, user)
                     #redicionar o usuario para a pagina de perfil
-                    return redirect("/homepage/perfil/")
+                    return redirect("/homepage/perfil/"+str(pk)+"/")
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,

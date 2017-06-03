@@ -21,6 +21,7 @@ class UserInfo(AbstractBaseUser):
         profession: profissao do usuario
         album_picture: nome do album que guarda as foto do usuario
         age: idedade do usuario
+        avatar: arquivo imagem do perfil
     """
     name = models.CharField(max_length = 250)
     username = models.CharField(max_length = 250, unique = True,default = "myusername")
@@ -34,6 +35,7 @@ class UserInfo(AbstractBaseUser):
     profession = models.CharField(max_length = 100)
     album_picture = models.CharField(max_length = 10000)
     age = models.IntegerField()
+    avatar = models.ImageField(max_length = 250, default = "avatar.png")
     
     USERNAME_FIELD = 'username'
 
@@ -49,7 +51,7 @@ class Album (models.Model):
     user_owner = models.CharField(max_length = 250)
     album_title = models.CharField(max_length = 250)
     genre = models.CharField(max_length = 100)
-    album_logo = models.CharField(max_length = 1000)
+    album_logo = models.ImageField(max_length = 1000)
     
     def __str__(self):
         
@@ -59,12 +61,13 @@ class Picture(models.Model):
     """
         Representa uma Figura ou Foto.
         album: eh o album ao qual pertence
-        file_type: eh a extensao do arquivo imagem
+        picture_file: eh o arquivo imagem
         picture_title: eh o nome da imagem
     """
     album = models.ForeignKey(Album, on_delete = models.CASCADE)
-    file_type = models.CharField(max_length = 10)
+    picture_file = models.ImageField(max_length = 1000,default = None)
     picture_title = models.CharField(max_length = 250)
+    
     
     def __str__(self):
         

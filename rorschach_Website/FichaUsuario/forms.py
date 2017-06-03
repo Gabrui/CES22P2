@@ -20,7 +20,7 @@ class UserForm(forms.ModelForm):
                                      required = False,
                                      validators = [EmailValidator])
     country = forms.CharField(label = "country", max_length = 150)
-    home_state_adress = forms.CharField(label = "home_state_adress", max_length = 150)
+    home_state_address = forms.CharField(label = "home_state_adress", max_length = 150)
     religion = forms.CharField(label = "religion", max_length = 150)
     civil_status = forms.CharField(label = "civil_status", max_length = 150)
     profession = forms.CharField(label = "profession", max_length = 150)
@@ -33,7 +33,7 @@ class UserForm(forms.ModelForm):
         model = UserInfo
         #definir os atributos do objeto que sera criado com este formulario
         fields = ['name','username', 'email_account', 'password', 'country', 
-                  'home_state_adress', 'religion','civil_status', 'profession',
+                  'home_state_address', 'religion','civil_status', 'profession',
                   'gender', 'age']
     def clean(self):
         #metodo para verificar validade de dados do usuario

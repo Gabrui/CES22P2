@@ -25,9 +25,9 @@ urlpatterns = [
         #url para tratar do cadastro, olhar na urls do app FicaUsuario
         url(r"^signUp/", include("FichaUsuario.urls")),
         #url para direcionar para o perfil, executar metodo views.perfil
-        url(r"^perfil/", 
-            views.SendTemplateView.as_view(template_name = "homepage/perfil.html"),
+        url(r"^perfil/(?P<pk>[0-9]+)/$", 
+            views.PerfilView.as_view(),
             name = "perfil"),
-       
+        url(r"^myAccount/(?P<pk>[0-9]+)/",views.UpdateAccount.as_view(),name ="myAccount"),
         
         ]
