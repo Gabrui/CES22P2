@@ -20,10 +20,6 @@ urlpatterns = [
         url(r"^$",
             views.SendTemplateView.as_view(template_name = "homepage/homepage.html"),
             name = "index"),
-        #url para tratar do login, olhar na urls do app FichaUsuario
-        url(r"^loginUser/", include("FichaUsuario.urls")),
-        #url para tratar do cadastro, olhar na urls do app FicaUsuario
-        url(r"^signUp/", include("FichaUsuario.urls")),
         #url para direcionar para o perfil, executar metodo views.perfil
         url(r"^perfil/(?P<pk>[0-9]+)/$", 
             views.PerfilView.as_view(),

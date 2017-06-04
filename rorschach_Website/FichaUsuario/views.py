@@ -54,7 +54,7 @@ class loginUser(View):
                     #pegar a primery key ou pk
                     pk = userinfo[0].pk
                     #redicionar o usuario para a pagina de perfil
-                    return redirect("/homepage/perfil/"+str(pk)+"/")
+                    return redirect("homepage:perfil", pk=pk)
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
@@ -85,9 +85,8 @@ class signUp(View):
         form = self.form_class(request.POST)
         #validar as informacoes
         #basicamente verifica caracteres estranhos.
-        print("HI")
+
         if form.is_valid():
-            print("valid")
             #cria um objeto form,
             #mas nao salva as informacoes no database
             user = form.save(commit = False)
@@ -99,7 +98,7 @@ class signUp(View):
             user.age = form.cleaned_data['age']
             user.country = form.cleaned_data['country']
             user.email_account = form.cleaned_data['email_account']
-            user.home_state_address = form.cleaned_data['home_state_adress']
+            user.home_state_address = form.cleaned_data['home_state_address']
             user.religion = form.cleaned_data['religion']
             user.civil_status = form.cleaned_data['civil_status']
             user.profession = form.cleaned_data['profession']
@@ -131,7 +130,7 @@ class signUp(View):
                     #logar o usuario
                     login(request, user)
                     #redicionar o usuario para a pagina de perfil
-                    return redirect("/homepage/perfil/"+str(pk)+"/")
+                    return redirect("homepage:perfil", pk=pk)
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
