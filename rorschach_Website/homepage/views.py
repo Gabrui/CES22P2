@@ -23,9 +23,18 @@ class SendTemplateView(View):
         #retorna a pagina html
         return render(request, self.template_name)
         
+
+
+
+class AuthUser(LoginRequiredMixin):
+    login_url = "/loginUser"
+    redirect_field_name = ""
+
+
+
     
     
-class PerfilView(generic.DetailView):
+class PerfilView(AuthUser, generic.DetailView):
     """
         Mostra algumas informacoes do Usuario.
     """
@@ -39,7 +48,7 @@ class PerfilView(generic.DetailView):
     
 
 
-class UpdateAccount(UpdateView):
+class UpdateAccount(AuthUser, UpdateView):
     """
         Mostra um formulario para o usuario atualizar as suas informacoes
     """
@@ -54,7 +63,8 @@ class UpdateAccount(UpdateView):
     
     
     
-class AlbumDetailView(generic.DetailView):
+    
+class AlbumDetailView(AuthUser, generic.DetailView):
     """
      Mostra informacoes do album   
     """
@@ -72,8 +82,11 @@ class AlbumDetailView(generic.DetailView):
         context['albumpk'] = self.object.pk
         context["all_picture"] = self.object.picture_set.all()
         return context
-    
-class AlbumAdder(CreateView):
+
+
+
+
+class AlbumAdder(AuthUser, CreateView):
     """
         Cria um novo album para o usuario.
     """     
@@ -87,7 +100,10 @@ class AlbumAdder(CreateView):
         album.save()
         return super(AlbumAdder,self).form_valid(form)
 
-class PictureDetailView(generic.DetailView):
+
+
+
+class PictureDetailView(AuthUser, generic.DetailView):
     """
      Mostra informacoes do album   
     """
@@ -103,7 +119,10 @@ class PictureDetailView(generic.DetailView):
 
         return context
     
-class PictureAdder(CreateView):
+
+
+
+class PictureAdder(AuthUser, CreateView):
     """
         Cria um novo album para o usuario.
     """     
