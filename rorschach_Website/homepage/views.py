@@ -85,6 +85,8 @@ class AlbumDetailView(generic.DetailView):
         context['album_logo'] = self.object.album_logo.url
         context['owner'] = self.request.user.username
         context['number_pictures'] = str(len(self.object.picture_set.all()))
+        context['albumpk'] = self.object.pk
+        context["all_picture"] = self.object.picture_set.all()
         return context
     
 class AlbumAdder(CreateView):
@@ -112,7 +114,7 @@ class PictureDetailView(generic.DetailView):
         context = super(PictureDetailView,self).get_context_data(**kwargs)
         context['pk'] = self.request.user.pk
         context['picture_title'] = self.object.picture_title
-        context['genre'] = Album.object.get(pk=self.object.album).genre
+        context['genre'] = Album.objects.get(pk=self.object.album.pk).genre
         context['picture_logo'] = self.object.picture_file.url
 
         return context
@@ -127,5 +129,6 @@ class PictureAdder(CreateView):
     def form_valid(self,form):
         form.instance.album_id = self.kwargs.get('pk')
         print(form.instance.album_id)
+        
         return super(PictureAdder,self).form_valid(form)
      

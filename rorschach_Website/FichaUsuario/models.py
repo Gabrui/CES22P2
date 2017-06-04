@@ -71,9 +71,13 @@ class Picture(models.Model):
     picture_file = models.ImageField(max_length = 1000,default = None)
     picture_title = models.CharField(max_length = 250)
     
+    def get_absolute_url(self):
+        #definir a url apos a criacao do album
+        return reverse("homepage:perfil",kwargs={'pk': Album.objects.get(pk=self.album.pk).user.pk})
+    
     
     def __str__(self):
         
-        return self.picture_title + " from " + self.album
+        return self.picture_title + " from " + str(self.album.album_title)
     
     

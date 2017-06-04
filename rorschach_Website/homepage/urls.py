@@ -35,7 +35,7 @@ urlpatterns = [
         url(r"^picture/(?P<pk>[0-9]+)/$", 
             views.PictureDetailView.as_view(),name="picture"),
         #/homepage/addPicture ,namespace = addPicture
-        url(r"^picture/add/$",views.PictureAdder.as_view(), name="addPicture"),
+        url(r"^picture/add/(?P<pk>[0-9]+)/$",views.PictureAdder.as_view(), name="addPicture"),
         
         
         ]
