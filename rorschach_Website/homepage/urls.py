@@ -21,7 +21,7 @@ urlpatterns = [
             views.SendTemplateView.as_view(template_name = "homepage/homepage.html"),
             name = "index"),
         #url para direcionar para o perfil, executar metodo views.perfil
-        url(r"^perfil/(?P<pk>[0-9]+)/$", 
+        url(r"^perfil/$", 
             views.PerfilView.as_view(),
             name = "perfil"),
         #/homepage/myaccount

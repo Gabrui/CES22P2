@@ -3,10 +3,12 @@ from django.shortcuts import render
 from django.views import generic
 from FichaUsuario.models import UserInfo, Album, Picture
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 #This File receive client request and send back the response
+
+
 
 class SendTemplateView(View):
     """
