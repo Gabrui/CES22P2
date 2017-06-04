@@ -6,7 +6,6 @@ Created on Thu Jun  1 15:44:38 2017
 """
 
 
-
 from django.conf.urls import url
 from django.conf import settings
 from . import views
@@ -28,7 +27,7 @@ urlpatterns = [
         #/FichaUsuario/login/
         #url para tratar o login do usuario, executar os metodos da classe login
         url(r"^loginUser/", views.loginUser.as_view(), name = 'loginUser'),
-        url(r"^logOut/", logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
+        url(r"^logout/", logout, {'next_page': "/"}, name='logout')
         # /appname/idnumber/
         #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")
         #passing object_id to use as variable in functionname

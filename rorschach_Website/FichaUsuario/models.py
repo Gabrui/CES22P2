@@ -75,7 +75,7 @@ class Picture(models.Model):
     
     def get_absolute_url(self):
         #definir a url apos a criacao do album
-        return reverse("homepage:perfil",kwargs={'pk': Album.objects.get(pk=self.album.pk).user.pk})
+        return reverse("homepage:album",kwargs={'pk': self.album.pk})
     
     
     def __str__(self):
