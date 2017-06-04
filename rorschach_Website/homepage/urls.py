@@ -30,5 +30,12 @@ urlpatterns = [
         url(r"^album/add/$", views.AlbumAdder.as_view(), name="addAlbum"),
         #/homepage/album namespace = album
         url(r"^album/(?P<pk>[0-9]+)/$",
-            views.AlbumDetailView.as_view(),name = "album")
+            views.AlbumDetailView.as_view(),name = "album"),
+        #/homepage/picture , namespace = picture
+        url(r"^picture/(?P<pk>[0-9]+)/$", 
+            views.PictureDetailView.as_view(),name="picture"),
+        #/homepage/addPicture ,namespace = addPicture
+        url(r"^picture/add/$",views.PictureAdder.as_view(), name="addPicture"),
+        
+        
         ]

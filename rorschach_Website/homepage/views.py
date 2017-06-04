@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import render
 from django.views import generic
-from FichaUsuario.models import UserInfo, Album
+from FichaUsuario.models import UserInfo, Album, Picture
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect
 
@@ -37,8 +37,9 @@ class PerfilView(generic.DetailView):
         context['home_state_address'] = self.object.home_state_address
         context['country'] = self.object.country
         context['age'] = self.object.age
+        listAlbums = UserInfo.objects.filter(username=self.request.user.username)[0].album_set.all()
+        context["all_albums"] = listAlbums
         return context
-    
     
 class UpdateAccount(UpdateView):
     """
@@ -75,19 +76,16 @@ class AlbumDetailView(generic.DetailView):
     """
     model = Album
     template_name = "homepage/album.html"
-    context_object_name = "all_albums"
     
     def get_context_data(self,**kwargs):
         context = super(AlbumDetailView,self).get_context_data(**kwargs)
         context['pk'] = self.request.user.pk
-        context['album_title'] = self.object.username
-        context['genre'] = self.object.avatar.url
-        context['album_logo'] = self.object.profession
+        context['album_title'] = self.object.album_title
+        context['genre'] = self.object.genre
+        context['album_logo'] = self.object.album_logo.url
         context['owner'] = self.request.user.username
         context['number_pictures'] = str(len(self.object.picture_set.all()))
         return context
-    def get_queryset(self):
-        return Album.objects.all()
     
 class AlbumAdder(CreateView):
     """
@@ -102,4 +100,32 @@ class AlbumAdder(CreateView):
         print(album.user)
         album.save()
         return super(AlbumAdder,self).form_valid(form)
+
+class PictureDetailView(generic.DetailView):
+    """
+     Mostra informacoes do album   
+    """
+    model = Picture
+    template_name = "homepage/picture.html"
     
+    def get_context_data(self,**kwargs):
+        context = super(PictureDetailView,self).get_context_data(**kwargs)
+        context['pk'] = self.request.user.pk
+        context['picture_title'] = self.object.picture_title
+        context['genre'] = Album.object.get(pk=self.object.album).genre
+        context['picture_logo'] = self.object.picture_file.url
+
+        return context
+    
+class PictureAdder(CreateView):
+    """
+        Cria um novo album para o usuario.
+    """     
+    model = Picture
+    template_name = "homepage/addPicture.html"
+    fields=["picture_title","picture_file"]
+    def form_valid(self,form):
+        form.instance.album_id = self.kwargs.get('pk')
+        print(form.instance.album_id)
+        return super(PictureAdder,self).form_valid(form)
+     

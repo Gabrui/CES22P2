@@ -12,15 +12,27 @@
 
 <div class="w3-col m7">
     <div class="w3-container">
-         <h4 class="w3-center">Album Information</h4>
+         <h4 class="w3-center">{{album_title}}</h4>
          <p class="w3-center"><img src="{{album_logo}}" class="w3-circle" style="height:106px;width:106px" alt="album_logo"></p>
          <hr>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{owner}}</p>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{album_title}}</p>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{genre}}</p>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{number_pictures}}</p>
+         <p>
+         <label>Username:</label>
+         <i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{owner}}</p>
+         <p>
+         <label>Album Title:</label>
+         <i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{album_title}}</p>
+         <p>
+         <label>Genre:</label>
+         <i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{genre}}</p>
+         <p>
+         <label>Number of Picture:</label>
+         <i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{number_pictures}}</p>
     </div>
-
+    <p>
+     <a href="{% url 'homepage:addPicture' %}">
+                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add New Photo
+     </a>
+    </p>
 
 </div>
 
