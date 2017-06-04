@@ -51,7 +51,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
              <ul>
              <li>
              {% for picture in all_picture %}
-                <img onclick="location.href='{% url 'homepage:picture' picture.pk %}'" src="{{picture_logo}}" style="width:100%" class="w3-margin-bottom">
+                <img onclick="location.href='{% url 'homepage:picture' picture.pk %}'" src="{{picture.picture_file.url}}" style="width:100%" class="w3-margin-bottom">
                 {%empty%}
                 <p>No Photos. To upload photos, create an album.</p>
              {% endfor %}

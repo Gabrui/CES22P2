@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- W3.CSS Template. Disponivel em view-source:https://www.w3schools.com/w3css/tryw3css_templates_parallax.htm-->
+<!-- Utilizamos o W3.CSS Template como base. Disponivel em https://www.w3schools.com/w3css/tryw3css_examples_login.htm-->
 <html>
 <title>Rorschach</title>
 <meta charset="UTF-8">
@@ -25,7 +25,7 @@ body, html {
 
 /* First image (Logo. Full height) */
 .bgimg-1 {
-    background-image: url('https://previews.123rf.com/images/cookelma/cookelma1507/cookelma150700191/42645696-Nature-photographer-tourist-with-camera-shoots-while-standing-on-top-of-the-mountain-Beautiful-Natur-Stock-Photo.jpg');
+    background-image: url('http://cdn.wallpapersafari.com/50/4/F1L7E9.jpg');
     min-height: 100%;
 }
 
@@ -55,7 +55,7 @@ body, html {
 
 <!-- Barra de Navegação (Topo) -->
 <div class="w3-top">
-  <div class="w3-bar" id="myNavbar">
+  <div class="w3-bar w3-black" id="myNavbar">
     <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
       <i class="fa fa-bars"></i>
     </a>
@@ -63,8 +63,13 @@ body, html {
     <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
     <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
     <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
-    <a onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-hide-small">LOGIN</a>
-    <a href="{% url 'FichaUsuario:signUp' %}" class="w3-bar-item w3-button w3-hide-small">Sign Up</a>
+    {% if not user.is_authenticated %}
+    	<a onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-hide-small">LOGIN</a>
+    	<a href="{% url 'FichaUsuario:signUp' %}" class="w3-bar-item w3-button w3-hide-small">Sign Up</a>
+    {% else %}
+    	<a href="{% url 'homepage:perfil' %}" class="w3-bar-item w3-button w3-hide-small">My profile</a>
+	<a href="{% url 'FichaUsuario:logout' %}" class="w3-bar-item w3-button w3-hide-small">Log Out</a>
+    {% endif %}
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-search"></i></a>
   </div>
 
@@ -85,7 +90,7 @@ body, html {
   
       <div class="w3-center"><br>
         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">&times;</span>
-        <img src="img_avatar4.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
+        <img src="/media/avatar.png" alt="Avatar" style="width:30%" class="w3-circle w3-margin-top">
       </div>
 
       <form class="w3-container" action="{% url 'FichaUsuario:loginUser' %}" method="post">
@@ -109,7 +114,7 @@ body, html {
   </div>
 
 <!-- First Parallax Image with Logo Text -->
-<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+<div class="bgimg-1 w3-display-container" id="home">
   <div class="w3-display-middle" style="white-space:nowrap;">
     <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity"> <span class="w3-hide-small">RORSCHACH</span> </span>
   </div>
@@ -294,10 +299,10 @@ function onClick(element) {
 window.onscroll = function() {myFunction()};
 function myFunction() {
     var navbar = document.getElementById("myNavbar");
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        navbar.className = "w3-bar" + " w3-card-2" + " w3-animate-top" + " w3-white";
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        navbar.className = "w3-bar w3-card-2  w3-animate-top  w3-white";
     } else {
-        navbar.className = navbar.className.replace(" w3-card-2 w3-animate-top w3-white", "");
+	navbar.className = "w3-bar w3-black w3-animate-bottom";
     }
 }
 

@@ -45,13 +45,49 @@ class UserInfo(models.Model):
 
 
 
+
+class GenreModel(models.Model):
+    """
+        Representa os Generos possíveis
+    """
+    name = models.CharField(max_length = 250)
+    
+    
+    def __str__(self):
+        return self.name
+    
+    
+    def getModels():
+        """
+        Retorna uma lista de dicionários com os nomes dos Models e seus PKs, 
+        da com chaves 'id' e 'name'
+        """
+        return GenreModel.objects.values()
+    
+    
+    def getFormSelection():
+        """
+        Retorna um formulário de seleção de HTML
+        """
+        html = ""
+        for genero in GenreModel.getModels():
+            html += ("<option value="+str(genero['id'])+">"+str(genero['name'])
+                    +"</option>")
+        return html
+        
+    
+
+
+
+
+
 class Album (models.Model):
     """
         Guarda fotos ou imagens.
     """
     user = models.ForeignKey(UserInfo, on_delete = models.CASCADE)
     album_title = models.CharField(max_length = 250)
-    genre = models.CharField(max_length = 100)
+    genre = models.ForeignKey(GenreModel, on_delete = models.CASCADE)
     album_logo = models.ImageField(max_length = 1000)
     
     def get_absolute_url(self):
@@ -59,9 +95,12 @@ class Album (models.Model):
         return reverse("homepage:perfil")
     
     def __str__(self):
-        
         return self.album_title + " owner " + self.user.username
-#------------------------------Fim da Classe Album----------------------------- 
+#------------------------------Fim da Classe Album-----------------------------
+
+
+
+
 class Picture(models.Model):
     """
         Representa uma Figura ou Foto.
@@ -75,13 +114,15 @@ class Picture(models.Model):
     
     def get_absolute_url(self):
         #definir a url apos a criacao do album
-        return reverse("homepage:perfil",kwargs={'pk': Album.objects.get(pk=self.album.pk).user.pk})
+        return reverse("homepage:album",kwargs={'pk': self.album.pk})
     
     
     def __str__(self):
-   
         return self.picture_title + " from " + str(self.album.album_title)
 #---------------------Fim da Classe Picture------------------------------------
+
+
+
 
 class Score(models.Model):
     """
@@ -91,8 +132,7 @@ class Score(models.Model):
     total_score = models.IntegerField()
     
     def __str__(self):
-         
-         
         return "Score of: " + self.picture.picture_title
 #--------------------------Fim da CLasse Score---------------------------------
     
+
