@@ -3,9 +3,12 @@ from django.shortcuts import render
 from django.views import generic
 from FichaUsuario.models import UserInfo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 #This File receive client request and send back the response
+
+
 
 class SendTemplateView(View):
     """
@@ -20,47 +23,36 @@ class SendTemplateView(View):
         #retorna a pagina html
         return render(request, self.template_name)
         
-class PerfilView(generic.DetailView):
+
+
+class AuthUser(LoginRequiredMixin):
+    login_url = "/loginUser"
+    redirect_field_name = ""
+    
+
+    
+    
+
+class PerfilView(AuthUser, generic.DetailView):
     model = UserInfo
     template_name = "homepage/perfil.html"
     
-    def get_context_data(self,**kwargs):
-        context = super(PerfilView,self).get_context_data(**kwargs)
-        context['pk'] = self.object.pk
-        context['username'] = self.object.username
-        context['avatar'] = self.object.avatar.url
-        context['profession'] = self.object.profession
-        context['home_state_address'] = self.object.home_state_address
-        context['country'] = self.object.country
-        context['age'] = self.object.age
-        return context
+    def get_object(self):
+        return self.request.user.userinfo
     
     
-class UpdateAccount(UpdateView):
+    
+    
+    
+class UpdateAccount(AuthUser, UpdateView):
     model = UserInfo
     template_name = "homepage/myAccount.html"
-    fields = ['name','username', 'email_account', 'password', 'country', 
-                  'home_state_address', 'religion','civil_status', 'profession',
-                  'gender', 'age','music_like','avatar']
+    fields = ['name', 'country', 'home_state_address', 'religion',
+              'civil_status', 'profession','gender', 'age','music_like','avatar']
     
-    def get_context_data(self,**kwargs):
-        context = super(UpdateAccount,self).get_context_data(**kwargs)
-        context['pk'] = self.object.pk
-        context['username'] = self.object.username
-        context['avatar'] = self.object.avatar.url
-        context['profession'] = self.object.profession
-        context['home_state_address'] = self.object.home_state_address
-        context['country'] = self.object.country
-        context['age'] = self.object.age
-        context['music_like'] = self.object.music_like
-        context['password'] = self.object.password
-        context['email_account'] = self.object.email_account
-        context['religion'] = self.object.religion
-        context['name'] = self.object.name
-        context['civil_status'] = self.object.civil_status
-        context['gender'] = self.object.gender
-         
-        return context
+    def get_object(self):
+        return self.request.user.userinfo
+    
         
         
         

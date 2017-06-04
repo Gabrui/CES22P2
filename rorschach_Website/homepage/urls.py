@@ -21,9 +21,9 @@ urlpatterns = [
             views.SendTemplateView.as_view(template_name = "homepage/homepage.html"),
             name = "index"),
         #url para direcionar para o perfil, executar metodo views.perfil
-        url(r"^perfil/(?P<pk>[0-9]+)/$", 
+        url(r"^perfil/$", 
             views.PerfilView.as_view(),
             name = "perfil"),
-        url(r"^(?P<pk>[0-9]+)/myAccount/",views.UpdateAccount.as_view(success_url='perfil'),name ="myAccount"),
+        url(r"^myAccount/",views.UpdateAccount.as_view(success_url='perfil'),name ="myAccount"),
         
         ]

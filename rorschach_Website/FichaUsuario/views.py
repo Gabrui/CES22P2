@@ -9,65 +9,73 @@ from .models import UserInfo
 # Create your views here.
 
 
+
+
 def index(request):
     
     pass
 #-----------------------------fim do metodo index------------------------------
 
+
+
+
 class loginUser(View):
     """
-        Representa o metodo de login
+    Representa o metodo de login
     """
     #criando formulario de login
     form_class = loginForm
     #defindo pagina html do login
     template_name = "homepage/homepage.html"
     
+    
     def get(self, request):
-        #resposta ao request de get do usuario
-        #cria um formulario
+        """
+        Resposta ao request de get do usuario: Invalida
+        """
+        # Cria um formulario
         form = self.form_class(None)
-        #retorna um formulario login em branco
+        # Retorna um formulario login em branco
         return render(request, self.template_name, {'form': form})
+    
+    
     def post(self, request):
-        #resposta ao request de post do usuario
-        #passa as informacoes do POST para o formulario
+        """
+        Resposta ao request de post do usuario: A ser validade
+        """
+        # Passa as informacoes do POST para o formulario
         form = self.form_class(request.POST)
-        #verificar se tem caracteres estranhos
-        form.is_valid()
-        #pegar o username e password passados no preenchimento do formulario
-        username = form.cleaned_data["login"]
-        password = form.cleaned_data["password"]
-        #procurar usuario
-        user = authenticate(username = username, password = password)
-        print(user)
-        if user is not None:
-                #se existir o usuario e a senha estiver correta
+        # Verificar se tem caracteres estranhos
+        if form.is_valid():
+            # Pega o username e password passados no preenchimento do formulario
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            # Procura usuario
+            user = authenticate(username = username, password = password)
+            # Se existir o usuario e a senha estiver correta
+            if user is not None:
+                # Se a conta do usuario nao esta banida
                 if user.is_active:
-                    #a conta do usuario nao esta banida
-                    #logar o usuario
+                    # Logar o usuario
                     login(request, user)
-                    #pegar primary key do objecto UserInfo
-                    #correspondente a esse usuario
-                    #procurar o userinfo correspondente
-                    userinfo = UserInfo.objects.filter(username = user.username)
-                    #pegar a primery key ou pk
-                    pk = userinfo[0].pk
-                    #redicionar o usuario para a pagina de perfil
-                    return redirect("homepage:perfil", pk=pk)
+                    return redirect("homepage:perfil")
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,
         #ir para a homepage
         return render(request, self.template_name, {'form': form})
 #-----------------------Fim da Classe loginUser--------------------------------  
+
+
+
+
   
 class signUp(View):
     """
-        representa o cadastro do usuario.
+    Representa o cadastro do usuario.
     """
-    #cria um objecto do tipo UserForm
-    #definido no arquivo forms da pasta FichaUsuario
+    # Cria um objecto do tipo UserForm
+    # Definido no arquivo forms da pasta FichaUsuario
     form_class = UserForm
     #define o template da pagina do formulario
     template_name = 'homepage/register.html'
@@ -77,6 +85,7 @@ class signUp(View):
         form = self.form_class(None)
         return render(request, self.template_name, {'form':form})
     
+    
     def post(self, request):
         #trata os dados enviados pelo usuario
         #validando os dados e cadastrando o usuario
@@ -85,52 +94,36 @@ class signUp(View):
         form = self.form_class(request.POST)
         #validar as informacoes
         #basicamente verifica caracteres estranhos.
-
+        print('post')
         if form.is_valid():
-            #cria um objeto form,
-            #mas nao salva as informacoes no database
-            user = form.save(commit = False)
+            print('valido')
+            # Cria um objeto form,mas nao salva as informacoes no database
+            userInfo = form.save(commit = False)
             
-            #normalized user data
-            user.username = form.cleaned_data['username']
+            # Infomações extraídas do formulário
+            username = form.cleaned_data['username']
+            email_account = form.cleaned_data['email_account']
             password = form.cleaned_data['password']
-            user.set_password(password)
-            user.age = form.cleaned_data['age']
-            user.country = form.cleaned_data['country']
-            user.email_account = form.cleaned_data['email_account']
-            user.home_state_address = form.cleaned_data['home_state_address']
-            user.religion = form.cleaned_data['religion']
-            user.civil_status = form.cleaned_data['civil_status']
-            user.profession = form.cleaned_data['profession']
-            user.gender = form.cleaned_data['gender']
-            #salva as informacoes do usuario no database
-            user.save()
-            #pegar primary key desse objecto UserInfo salvo
-            pk = user.pk
+            
             #criar objeto usuario
             #e passar as informacoes basicas
-            created_user = User.objects.create_user(username = user.username,
-                                     email = user.email_account,password=password)
+            created_user = User.objects.create_user(username = username,
+                                     email = email_account, password=password)
+            userInfo.user = created_user
             #salvar usuario
             created_user.save()
+            userInfo.save()
             #Aqui acaba o processo de registro do usuario.
             
-            #verifica no database se o usuario existe.
-            #retorna um objecto User do database
-            print(user.username)
-            print(password)
-            user = authenticate(username = user.username, password = password)
-            print(user)
+            # Procura usuario
+            user = authenticate(username = username, password = password)
+            # Se existir o usuario e a senha estiver correta
             if user is not None:
-                print("authenticated")
-                #se o usuario existe
+                # Se a conta do usuario nao esta banida
                 if user.is_active:
-                    print("active")
-                    #a conta do usuario nao esta banida
-                    #logar o usuario
+                    # Logar o usuario
                     login(request, user)
-                    #redicionar o usuario para a pagina de perfil
-                    return redirect("homepage:perfil", pk=pk)
+                    return redirect("homepage:perfil")
         #se os dados nao forem validos
         #ou usuario nao tiver conta no database
         #ou a conta do usuario estiver banida,

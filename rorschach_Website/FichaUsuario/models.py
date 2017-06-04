@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import User
 
 # Create your models here.
 #Django transforma cada classe em uma tabela
@@ -7,11 +7,11 @@ from django.contrib.auth.models import AbstractBaseUser
 #isso eh criado no database quando sincronizamos
 #o database com o codigo
 
-class UserInfo(AbstractBaseUser):
+class UserInfo(models.Model):
     """
         Guarda as informacoes do usuario.
+        user: Referência ao objeto de autenticação, que guarda login 
         name: nome do usuario
-        email_account: conta de email do usuario
         gender: gênero do usuário.
         country: Pais em que usuario mora.
         home_state_address: estado onde o usuario mora.
@@ -23,9 +23,8 @@ class UserInfo(AbstractBaseUser):
         age: idedade do usuario
         avatar: arquivo imagem do perfil
     """
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default = None)
     name = models.CharField(max_length = 250)
-    username = models.CharField(max_length = 250, unique = True,default = "myusername")
-    email_account = models.EmailField(max_length = 250, unique=True, default = "myaccount@emaildomain.com")
     gender = models.CharField(max_length = 30)
     country = models.CharField(max_length = 250)
     home_state_address = models.CharField(max_length = 250)
@@ -37,12 +36,14 @@ class UserInfo(AbstractBaseUser):
     age = models.IntegerField()
     avatar = models.ImageField(max_length = 250, default = "avatar.png")
     
-    USERNAME_FIELD = 'username'
 
-    def __str__(self):
-        
-        return self.username + " AND " +self.email_account
-    
+    def __str__(self):        
+        return self.name + " AND " +str(self.user)
+
+
+
+
+
 class Album (models.Model):
     """
         Guarda fotos ou imagens.
@@ -53,10 +54,14 @@ class Album (models.Model):
     genre = models.CharField(max_length = 100)
     album_logo = models.ImageField(max_length = 1000)
     
-    def __str__(self):
-        
-        return self.album_title + " owner " + self._user_owner 
     
+    def __str__(self):
+        return self.album_title + " owner " + self._user_owner 
+
+
+
+
+
 class Picture(models.Model):
     """
         Representa uma Figura ou Foto.
@@ -65,12 +70,11 @@ class Picture(models.Model):
         picture_title: eh o nome da imagem
     """
     album = models.ForeignKey(Album, on_delete = models.CASCADE)
-    picture_file = models.ImageField(max_length = 1000,default = None)
+    picture_file = models.ImageField(max_length = 1000, default = None)
     picture_title = models.CharField(max_length = 250)
     
     
     def __str__(self):
-        
         return self.picture_title + " from " + self.album
     
     
