@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- W3.CSS Template. Disponivel em https://www.w3schools.com/w3css/tryw3css_examples_login.htm-->
+<html>
+<title>Rorschach</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<header class="w3-container w3-teal">
+  <h1>My New Album</h1>
+</header>
+
+<div class="w3-container w3-half w3-margin-top">
+
+<form action="" enctype='multipart/form-data' class="w3-container w3-card-4" method="post">
+{% csrf_token %}
+    {{form.as_p}}
+    <input type="text" class="w3-input" value="{{album_owner}}" disabled>
+    <input type="submit" value="Update" name='_save'/>
+ 
+</form>
+
+</div>
+
+</body>
+</html> 

@@ -24,6 +24,11 @@ urlpatterns = [
         url(r"^perfil/(?P<pk>[0-9]+)/$", 
             views.PerfilView.as_view(),
             name = "perfil"),
+        #/homepage/myaccount
         url(r"^(?P<pk>[0-9]+)/myAccount/",views.UpdateAccount.as_view(success_url='perfil'),name ="myAccount"),
-        
+        #/homepage/addAlbum namespace = addAlbum
+        url(r"^album/add/$", views.AlbumAdder.as_view(), name="addAlbum"),
+        #/homepage/album namespace = album
+        url(r"^album/(?P<pk>[0-9]+)/$",
+            views.AlbumDetailView.as_view(),name = "album")
         ]

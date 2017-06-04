@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-
+from django.core.urlresolvers import reverse
 # Create your models here.
 #Django transforma cada classe em uma tabela
 # e as suas variaveis viram colunas
@@ -48,14 +48,17 @@ class Album (models.Model):
         Guarda fotos ou imagens.
     """
     user = models.ForeignKey(UserInfo, on_delete = models.CASCADE)
-    user_owner = models.CharField(max_length = 250)
     album_title = models.CharField(max_length = 250)
     genre = models.CharField(max_length = 100)
     album_logo = models.ImageField(max_length = 1000)
     
+    def get_absolute_url(self):
+        #definir a url apos a criacao do album
+        return reverse("homepage:perfil",kwargs={'pk': self.user.pk})
+    
     def __str__(self):
         
-        return self.album_title + " owner " + self._user_owner 
+        return self.album_title + " owner " + self.user.username
     
 class Picture(models.Model):
     """

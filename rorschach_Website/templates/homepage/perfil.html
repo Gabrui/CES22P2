@@ -68,9 +68,21 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
           <div id="Demo1" class="w3-hide w3-container">
             <p>Some text..</p>
           </div>
-          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
+          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Albums</button>
           <div id="Demo2" class="w3-hide w3-container">
-            <p>Some other text..</p>
+            
+               <ul>
+               {% for album in all_albums %}
+                    <li><a href='{% url "homepage:album" album.id %}'>{{album.album_title}}</a></li>
+               {% endfor %}
+               </ul>
+            
+            <p>
+                <a href="{% url 'homepage:addAlbum' %}">
+                   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add New Album
+                </a>
+                 
+            </p>
           </div>
           <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
           <div id="Demo3" class="w3-hide w3-container">
