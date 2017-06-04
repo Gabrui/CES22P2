@@ -1,7 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import render
 from django.views import generic
-from FichaUsuario.models import UserInfo, Album, Picture
+from FichaUsuario.models import UserInfo, Album, Picture, GenreModel
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -72,7 +72,7 @@ class AlbumDetailView(AuthUser, generic.DetailView):
     template_name = "homepage/album.html"
     
     def get_context_data(self,**kwargs):
-        context = super(AlbumDetailView,self).get_context_data(**kwargs)
+        context = generic.DetailView(self).get_context_data(**kwargs)
         context['pk'] = self.request.user.pk
         context['album_title'] = self.object.album_title
         context['genre'] = self.object.genre
@@ -93,6 +93,8 @@ class AlbumAdder(AuthUser, CreateView):
     model = Album
     template_name = "homepage/addAlbum.html"
     fields=["album_title","genre","album_logo"]
+    
+    
     def form_valid(self,form):
         album = form.save(commit=False)
         album.user = self.request.user.userinfo
