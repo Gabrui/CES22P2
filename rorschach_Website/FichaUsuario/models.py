@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.core.urlresolvers import reverse
-# Create your models here.
-# Create your models here.
+from django.contrib.auth.models import User
+
 #Django transforma cada classe em uma tabela
 # e as suas variaveis viram colunas
 #isso eh criado no database quando sincronizamos

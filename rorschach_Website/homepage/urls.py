@@ -25,7 +25,7 @@ urlpatterns = [
             views.PerfilView.as_view(),
             name = "perfil"),
         #/homepage/myaccount
-        url(r"^(?P<pk>[0-9]+)/myAccount/",views.UpdateAccount.as_view(success_url='perfil'),name ="myAccount"),
+        url(r"myAccount/",views.UpdateAccount.as_view(success_url='perfil'),name ="myAccount"),
         #/homepage/addAlbum namespace = addAlbum
         url(r"^album/add/$", views.AlbumAdder.as_view(), name="addAlbum"),
         #/homepage/album namespace = album

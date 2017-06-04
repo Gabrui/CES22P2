@@ -23,6 +23,8 @@ class SendTemplateView(View):
         #retorna a pagina html
         return render(request, self.template_name)
         
+    
+    
 class PerfilView(generic.DetailView):
     """
         Mostra algumas informacoes do Usuario.
@@ -30,47 +32,27 @@ class PerfilView(generic.DetailView):
     model = UserInfo
     template_name = "homepage/perfil.html"
     
-    def get_context_data(self,**kwargs):
-        context = super(PerfilView,self).get_context_data(**kwargs)
-        context['pk'] = self.object.pk
-        context['username'] = self.object.username
-        context['avatar'] = self.object.avatar.url
-        context['profession'] = self.object.profession
-        context['home_state_address'] = self.object.home_state_address
-        context['country'] = self.object.country
-        context['age'] = self.object.age
-        listAlbums = UserInfo.objects.filter(username=self.request.user.username)[0].album_set.all()
-        context["all_albums"] = listAlbums
-        return context
+    def get_object(self):
+        self.all_albums = self.request.user.userinfo.album_set.all()
+        return self.request.user.userinfo
     
+    
+
+
 class UpdateAccount(UpdateView):
     """
         Mostra um formulario para o usuario atualizar as suas informacoes
     """
     model = UserInfo
     template_name = "homepage/myAccount.html"
-    fields = ['name', 'email_account', 'password', 'country', 
+    fields = ['name', 'country', 
                   'home_state_address', 'religion','civil_status', 'profession',
                   'gender', 'age','music_like','avatar']
     
-    def get_context_data(self,**kwargs):
-        context = super(UpdateAccount,self).get_context_data(**kwargs)
-        context['pk'] = self.object.pk
-        context['username'] = self.object.username
-        context['avatar'] = self.object.avatar.url
-        context['profession'] = self.object.profession
-        context['home_state_address'] = self.object.home_state_address
-        context['country'] = self.object.country
-        context['age'] = self.object.age
-        context['music_like'] = self.object.music_like
-        context['password'] = self.object.password
-        context['email_account'] = self.object.email_account
-        context['religion'] = self.object.religion
-        context['name'] = self.object.name
-        context['civil_status'] = self.object.civil_status
-        context['gender'] = self.object.gender
-         
-        return context
+    def get_object(self):
+        return self.request.user.userinfo
+    
+    
     
 class AlbumDetailView(generic.DetailView):
     """
@@ -100,7 +82,7 @@ class AlbumAdder(CreateView):
     fields=["album_title","genre","album_logo"]
     def form_valid(self,form):
         album = form.save(commit=False)
-        album.user = UserInfo.objects.filter(username=self.request.user.username)[0]
+        album.user = self.request.user.userinfo
         print(album.user)
         album.save()
         return super(AlbumAdder,self).form_valid(form)
