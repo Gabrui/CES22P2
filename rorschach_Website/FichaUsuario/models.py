@@ -40,7 +40,7 @@ class UserInfo(models.Model):
 
     def __str__(self):        
         return self.name + " AND " +str(self.user)
-
+#-------------------------Fim da Classe UserInfo-------------------------------
 
 
 
@@ -61,7 +61,7 @@ class Album (models.Model):
     def __str__(self):
         
         return self.album_title + " owner " + self.user.username
-    
+#------------------------------Fim da Classe Album----------------------------- 
 class Picture(models.Model):
     """
         Representa uma Figura ou Foto.
@@ -81,6 +81,18 @@ class Picture(models.Model):
     def __str__(self):
    
         return self.picture_title + " from " + str(self.album.album_title)
+#---------------------Fim da Classe Picture------------------------------------
 
+class Score(models.Model):
+    """
+        Representa a pontuacao de uma caracteristica.
+    """
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
+    total_score = models.IntegerField()
     
+    def __str__(self):
+         
+         
+        return "Score of: " + self.picture.picture_title
+#--------------------------Fim da CLasse Score---------------------------------
     

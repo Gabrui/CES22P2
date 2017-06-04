@@ -29,8 +29,6 @@ urlpatterns = [
         #url para tratar o login do usuario, executar os metodos da classe login
         url(r"^loginUser/", views.loginUser.as_view(), name = 'loginUser'),
         url(r"^logOut/", logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
-        # /appname/idnumber/
-        #url(r"^(?P<object_id>[0-9]+)/$", views.functionname, name = "functionname")
-        #passing object_id to use as variable in functionname
-        #the object_id is the idnumber from url
+        #FichaUsuario/grade/?P<string>[\w\-]+/$
+        url(r"^grade/(?P<string>[\w\-]+/$"),views.SelectRandomImageView.as_view() ,name="grade")
         ]

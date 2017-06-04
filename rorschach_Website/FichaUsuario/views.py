@@ -6,6 +6,7 @@ from .forms import UserForm, loginForm
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
 from .models import UserInfo
+import random
 # Create your views here.
 
 
@@ -131,3 +132,26 @@ class signUp(View):
         return render(request, self.template_name, {'form': form})
 #--------------------------Fim da Classe singUp-------------------------------- 
     
+
+#random.randint(a,b)
+
+class SelectRandomImageView(View):
+     
+    template_name = "homepage/grade.html"
+    
+    def get(self,request):
+        grade = self.request.Get.get("string")
+        listAlbum = Album.objects.filter(genre=grade)
+        for album in listAlbum: 
+             listPicture += album.picture_set.all()
+    
+        
+        
+    def post(self, request):
+        pass
+
+
+
+
+
+
