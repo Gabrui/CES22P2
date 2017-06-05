@@ -3,7 +3,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.generic import View
 from .forms import UserForm, loginForm
-from .models import Album, Picture,Score, GenreModel
+from django.forms import ValidationError
+from django.utils.translation import ugettext as _
+from .models import UserInfo, Album, Picture,Score, GenreModel
+from homepage.views import AuthUser
 import random
 # Create your views here.
 
@@ -121,9 +124,8 @@ class signUp(View):
     
 
 
-
-
-class SelectRandomImageView(View):
+class SelectRandomImageView(AuthUser,View):
+    
     """
         Seleciona aleatoriamente imagens de uma categoria para colocar na tela
         do usuario. Aumenta o score de uma imagem escolhida pelo usuario.
