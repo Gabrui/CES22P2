@@ -21,11 +21,11 @@
         <th>Points</th>
       </tr>
     </thead>
-    {% for image in view.images %}
+    {% for image in SortedList %}
       <tr>
-      <td>{{image.url}}</td>
-      <td>{{image.name}}</td>
-      <td>{{image.points}}</td>
+          <td><img src="{{image.1.picture_file.url}}"/></td>
+      <td>{{image.1.picture_title}}</td>
+      <td>{{image.0}}</td>
     </tr>
       {%empty%}
        <tr>

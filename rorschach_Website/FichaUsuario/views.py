@@ -193,12 +193,14 @@ class SelectRandomImageView(View):
         score = Score.objects.filter(user=userInfo, picture=picture)
         if score:
             #se existir aumenta o score
-            
-            score[0].total_score+=1
+            #aumentar score
+            score[0].total_score +=1
+            #salvar alteracao
+            score[0].save()
             
         else:
             #se nao existir, cria um score atrelado ao usuario e ah imagem
-            picture.score_set.create(total_score=1,user=userInfo)
+            picture.score_set.create(total_score = 1,user=userInfo)
         #redireciona para propria pagina para fornacer novas imagens
         #para serem escolhidas
         return redirect(".")
@@ -211,7 +213,7 @@ class RankView(View):
     """
     
     #definir template html a ser usado
-    template_name = "homepage/rankview.html"
+    template_name = "homepage/ranking.html"
     
     def get(self,request,category,criteria):
         """
@@ -245,9 +247,10 @@ class RankView(View):
                         for score in scoreList:
                             newscore += score.total_score
                         listfinal.append((newscore, picture))
-                SortedList = sorted(listfinal, key=lambda x: x[0])
+                SortedList = sorted(listfinal, key=lambda x: x[0], reverse=True)
         context = {}
         context["SortedList"] = SortedList
+        print(SortedList)
         #retorna context que contem todas as variaveis usadas no html
         return context
 #-------------------------Fim da Classe RankView-------------------------------  
