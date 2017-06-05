@@ -130,6 +130,7 @@ class Score(models.Model):
     """
     picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
     total_score = models.IntegerField()
+    user = models.ForeignKey(UserInfo,default = None)
     
     def __str__(self):
         return "Score of: " + self.picture.picture_title

@@ -5,7 +5,7 @@ from django.views.generic import View
 from .forms import UserForm, loginForm
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
-from .models import UserInfo
+from .models import UserInfo, Album, Picture,Score
 import random
 # Create your views here.
 
@@ -139,16 +139,47 @@ class SelectRandomImageView(View):
      
     template_name = "homepage/grade.html"
     
-    def get(self,request):
-        grade = self.request.Get.get("string")
-        listAlbum = Album.objects.filter(genre=grade)
+    def get(self,request,string):
+        
+        return render(request,self.template_name, context=self.get_context_data(string))
+    
+    def get_context_data(self,string): 
+        listAlbum = Album.objects.filter(genre=string)
+        listPicture=[]
         for album in listAlbum: 
              listPicture += album.picture_set.all()
-    
+        tamListPicture = len(listPicture)
+        if tamListPicture>0:
+            dif = False
+            while not dif:
+                firstImg = random.randint(0,tamListPicture)
+                secondImg = random.randint(0,tamListPicture)
+                if firstImg!=secondImg:
+                    dif = True
+        context = {}
+        context["img1"] = listPicture[firstImg].picture_file.url
+        context["img2"] = listPicture[secondImg].picture_file.url
+        context['pk1'] = listPicture[firstImg].pk
+        context['pk2'] = listPicture[secondImg].pk
         
+        return context
         
-    def post(self, request):
-        pass
+    def post(self, request,string):
+        
+        img_pk = self.request.POST.get("pk","")
+        picture = Picture.objects.get(pk = img_pk)
+        user = self.request.user
+        userInfo = user.userinfo
+        score = Score.objects.get(user=userInfo)
+        if score:
+            
+            score.total_score+=1
+            
+        else:
+            
+            picture.score_set.create(total_score=1,user=userInfo)
+            
+        return redirect(".")
 
 
 
