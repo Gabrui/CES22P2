@@ -74,7 +74,7 @@ class GenreModel(models.Model):
             html += ("<option value="+str(genero['id'])+">"+str(genero['name'])
                     +"</option>")
         return html
-        
+ #--------------------------------Fim da CLasse GenreModel---------------------       
     
 
 

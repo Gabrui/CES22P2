@@ -141,50 +141,66 @@ class SelectRandomImageView(View):
         Seleciona aleatoriamente imagens de uma categoria para colocar na tela
         do usuario. Aumenta o score de uma imagem escolhida pelo usuario.
     """
+    #Definir nome do template html a ser usado
     template_name = "homepage/grade.html"
     
     def get(self,request,string):
         
-       return render(request,self.template_name, context=self.get_context_data(string))
+        """
+            Metodo de resposta ao usuario com request GET.
+        """
+        #retorna o template html definido anterior
+        return render(request,self.template_name, context=self.get_context_data(string))
     
     def get_context_data(self,string): 
-       pkgenre = GenreModel.objects.get(name=string)
-       listAlbum = Album.objects.filter(genre=pkgenre)
-       listPicture=[]
-       for album in listAlbum: 
+        """
+            Metodo que fornece variaveis que sao usadas no template html
+        """
+        pkgenre = GenreModel.objects.get(name=string)
+        listAlbum = Album.objects.filter(genre=pkgenre)
+        listPicture=[]
+        for album in listAlbum: 
             listPicture += album.picture_set.all()
-       tamListPicture = len(listPicture)
-       if tamListPicture>0:
+        tamListPicture = len(listPicture)
+        if tamListPicture>0:
            dif = False
            while not dif:
                firstImg = random.randint(0,tamListPicture-1)
                secondImg = random.randint(0,tamListPicture-1)
                if firstImg!=secondImg:
                    dif = True
-       context = {}
-       context["img1"] = listPicture[firstImg].picture_file.url
-       context["img2"] = listPicture[secondImg].picture_file.url
-       context['pk1'] = listPicture[firstImg].pk
-       context['pk2'] = listPicture[secondImg].pk
-        
-       return context
+        context = {}
+        context["img1"] = listPicture[firstImg].picture_file.url
+        context["img2"] = listPicture[secondImg].picture_file.url
+        context['pk1'] = listPicture[firstImg].pk
+        context['pk2'] = listPicture[secondImg].pk
+        #retorna context que possui todas as variaveis usadas no html
+        return context
         
     def post(self, request,string):
-        
+        """
+            Metodo de resposta ao request do usuario do tipo POST
+        """
+        #pegar pk da imagem passada pela url no metodo POST
         img_pk = self.request.POST.get("pk","")
+        #pegar object imagem referente ao pk da imagem passado anteriomente
         picture = Picture.objects.get(pk = img_pk)
+        #pegar objeto usuario do request
         user = self.request.user
+        #pegar objecto UserInfo que contem todas as informacoes do usuario
         userInfo = user.userinfo
+        #pegar objecto score referente ao usuario e da imagem
         score = Score.objects.filter(user=userInfo, picture=picture)
         if score:
-            
+            #se existir aumenta o score
             
             score[0].total_score+=1
             
         else:
-            
+            #se nao existir, cria um score atrelado ao usuario e ah imagem
             picture.score_set.create(total_score=1,user=userInfo)
-            
+        #redireciona para propria pagina para fornacer novas imagens
+        #para serem escolhidas
         return redirect(".")
 #--------------------Fim da Classe SelectRandomimageView-----------------------
 
@@ -194,6 +210,7 @@ class RankView(View):
         categoria escolhida pelo usuario e de fitros escolhidos pelo usuario.
     """
     
+    #definir template html a ser usado
     template_name = "homepage/rankview.html"
     
     def get(self,request,category,criteria):
@@ -202,14 +219,18 @@ class RankView(View):
             imagens ordanadas por score.
         """
        
+        #retorna o template html
         return render(request,self.template_name, context=self.get_context_data(category))        
     
     def get_context_data(self,category):
-        
+        """
+            Metodo que fornece as variaveis que sao usadas no codigo html.
+        """
         SortedList=[]
         if category:
             
-            albumList = Album.objects.filter(genre = category)
+            pk_genre = GenreModel.objects.get(name=category)
+            albumList = Album.objects.filter(genre = pk_genre)
             pictureList = []
             listfinal = []
             
@@ -227,8 +248,9 @@ class RankView(View):
                 SortedList = sorted(listfinal, key=lambda x: x[0])
         context = {}
         context["SortedList"] = SortedList
+        #retorna context que contem todas as variaveis usadas no html
         return context
-    
+#-------------------------Fim da Classe RankView-------------------------------  
 
 
 
