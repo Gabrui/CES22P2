@@ -122,7 +122,6 @@ class AlbumAdder(AuthUser, CreateView):
         album = form.save(commit=False)
         #atrela o objeto album ao objeto UserInfo do usuario logado.
         album.user = self.request.user.userinfo
-        print(album.user)
         #salva o album no database
         album.save()
         return super(AlbumAdder,self).form_valid(form)
@@ -160,12 +159,11 @@ class PictureAdder(AuthUser, CreateView):
     model = Picture
     template_name = "homepage/addPicture.html"
     fields=["picture_title","picture_file"]
+    
     def form_valid(self,form):
         """
             Metodo que complementa a criacao de um objecto Picture.
         """
-        form.instance.album_id = self.kwargs.get('pk')
-        print(form.instance.album_id)
-        
+        form.instance.album_id = self.kwargs.get('pk')        
         return super(PictureAdder,self).form_valid(form)
      

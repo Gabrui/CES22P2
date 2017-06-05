@@ -3,20 +3,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.generic import View
 from .forms import UserForm, loginForm
-from django.forms import ValidationError
-from django.utils.translation import ugettext as _
-from .models import UserInfo, Album, Picture,Score, GenreModel
+from .models import Album, Picture,Score, GenreModel
 import random
 # Create your views here.
-
-
-
-
-def index(request):
-    
-    pass
-#-----------------------------fim do metodo index------------------------------
-
 
 
 
@@ -95,9 +84,7 @@ class signUp(View):
         form = self.form_class(request.POST)
         #validar as informacoes
         #basicamente verifica caracteres estranhos.
-        print('post')
         if form.is_valid():
-            print('valido')
             # Cria um objeto form,mas nao salva as informacoes no database
             userInfo = form.save(commit = False)
             
@@ -133,10 +120,10 @@ class signUp(View):
 #--------------------------Fim da Classe singUp-------------------------------- 
     
 
-#random.randint(a,b)
+
+
 
 class SelectRandomImageView(View):
-    
     """
         Seleciona aleatoriamente imagens de uma categoria para colocar na tela
         do usuario. Aumenta o score de uma imagem escolhida pelo usuario.
@@ -177,6 +164,7 @@ class SelectRandomImageView(View):
         #retorna context que possui todas as variaveis usadas no html
         return context
         
+    
     def post(self, request,string):
         """
             Metodo de resposta ao request do usuario do tipo POST
@@ -205,6 +193,10 @@ class SelectRandomImageView(View):
         #para serem escolhidas
         return redirect(".")
 #--------------------Fim da Classe SelectRandomimageView-----------------------
+
+
+
+
 
 class RankView(View):
     """
@@ -250,7 +242,6 @@ class RankView(View):
                 SortedList = sorted(listfinal, key=lambda x: x[0], reverse=True)
         context = {}
         context["SortedList"] = SortedList
-        print(SortedList)
         #retorna context que contem todas as variaveis usadas no html
         return context
 #-------------------------Fim da Classe RankView-------------------------------  
