@@ -136,7 +136,10 @@ class signUp(View):
 #random.randint(a,b)
 
 class SelectRandomImageView(View):
-     
+     """
+         Seleciona aleatoriamente imagens de uma categoria para colocar na tela
+         do usuario. Aumenta o score de uma imagem escolhida pelo usuario.
+     """
     template_name = "homepage/grade.html"
     
     def get(self,request,string):
@@ -180,9 +183,47 @@ class SelectRandomImageView(View):
             picture.score_set.create(total_score=1,user=userInfo)
             
         return redirect(".")
+#--------------------Fim da Classe SelectRandomimageView-----------------------
 
-
-
+class RankView(View):
+    """
+        Fornece uma lista ordenada de acordo com os scores de imagens de uma
+        categoria escolhida pelo usuario e de fitros escolhidos pelo usuario.
+    """
+    
+    template_name = "homepage/rankview.html"
+    
+    def get(self,request,category,criteria):
+        """
+            metodo que responde ao request GET. Retornando um template com as 
+            imagens ordanadas por score.
+        """
+        SortedList=[]
+        if category:
+            
+            albumList = Album.objects.filter(genre = category)
+            pictureList = []
+            listfinal = []
+            
+            if albumList:
+                for album in albumlist:
+                
+                    pictureList = album.picture_set.all()
+                    for picture in pictureList:
+                        
+                        scoreList = picture.score_set.all()
+                        newscore = 0
+                        for score in scoreList:
+                            newscore += score.total_score
+                        listfinal.append((newscore, picture))
+                SortedList = sorted(listfinal, key=lambda x: x[0])
+        context = {}
+        context["SortedList"] = SortedList
+        return render(request,self.template_name, context=SortedList)        
+    
+    
+    
+    
 
 
 

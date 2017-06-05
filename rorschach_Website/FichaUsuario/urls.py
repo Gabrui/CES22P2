@@ -27,7 +27,10 @@ urlpatterns = [
         #/FichaUsuario/login/
         #url para tratar o login do usuario, executar os metodos da classe login
         url(r"^loginUser/", views.loginUser.as_view(), name = 'loginUser'),
+        #/FichaUsuario/logout/
         url(r"^logout/", logout, {'next_page': "/"}, name='logout'),
         #FichaUsuario/grade/?P<string>[\w\-]+/$
-        url(r"^grade/(?P<string>[\w\-]+)/$",views.SelectRandomImageView.as_view() ,name="grade")
+        url(r"^grade/(?P<string>[\w\-]+)/$",views.SelectRandomImageView.as_view() ,name="grade"),
+        #FichaUsuario/rank/?P<category>[\w\-]+/$/?P<filter>[\w\-]+/$
+        url(r"^rank/?P<category>[\w\-]+/$/?P<criteria>[\w\-]+/$",views.RankView.as_view(), name = "rank"),
         ]
