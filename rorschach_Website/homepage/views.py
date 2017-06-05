@@ -42,13 +42,21 @@ class PerfilView(AuthUser, generic.DetailView):
     template_name = "homepage/perfil.html"
     
     def get_object(self):
+        #pega os albums do usuario logado para mostrar na tela
         self.all_albums = self.request.user.userinfo.album_set.all()
+        #retorna um objeto UserInfo que contem todas as informacoes do usuario
         return self.request.user.userinfo
     def get_context_data(self,**kwargs):
-        
+        """
+            Metodo que fornece as variaveis que sao usada no codigo html para 
+            o template html
+        """
         context = super(PerfilView,self).get_context_data(**kwargs)
+        #construir lista de generos
         listCategory = GenreModel.objects.all()
-        context['listCategory'] = listCategory 
+        #organizar a lista num dicionario
+        context['listCategory'] = listCategory
+        #retorna o dicionario
         return context
     
 
@@ -77,7 +85,12 @@ class AlbumDetailView(AuthUser, generic.DetailView):
     template_name = "homepage/album.html"
     
     def get_context_data(self,**kwargs):
+        """
+            Metodo que fornece as variaveis que sao usadas no codigo html para
+            o template html usado.
+        """
         context = super(AlbumDetailView,self).get_context_data(**kwargs)
+        #organiza tudo em um dicionario
         context['pk'] = self.request.user.pk
         context['album_title'] = self.object.album_title
         context['genre'] = self.object.genre
@@ -86,6 +99,7 @@ class AlbumDetailView(AuthUser, generic.DetailView):
         context['number_pictures'] = str(len(self.object.picture_set.all()))
         context['albumpk'] = self.object.pk
         context["all_picture"] = self.object.picture_set.all()
+        #retorna o dicionario com as variaveis e seus valores
         return context
 
 
@@ -101,9 +115,15 @@ class AlbumAdder(AuthUser, CreateView):
     
     
     def form_valid(self,form):
+        """
+            Metodo que trata a criacao de um novo album.
+        """
+        #cria um objeto album com as informacoes preenchidas pelo usuario
         album = form.save(commit=False)
+        #atrela o objeto album ao objeto UserInfo do usuario logado.
         album.user = self.request.user.userinfo
         print(album.user)
+        #salva o album no database
         album.save()
         return super(AlbumAdder,self).form_valid(form)
 
@@ -118,12 +138,16 @@ class PictureDetailView(AuthUser, generic.DetailView):
     template_name = "homepage/picture.html"
     
     def get_context_data(self,**kwargs):
+        """
+            Metodo que fornece as variaveis que sao usadas no codigo html.
+        """
+        #organiza tudo em um dicionario
         context = super(PictureDetailView,self).get_context_data(**kwargs)
         context['pk'] = self.request.user.pk
         context['picture_title'] = self.object.picture_title
         context['genre'] = Album.objects.get(pk=self.object.album.pk).genre
         context['picture_logo'] = self.object.picture_file.url
-
+        #retorna o dicionario
         return context
     
 
@@ -137,6 +161,9 @@ class PictureAdder(AuthUser, CreateView):
     template_name = "homepage/addPicture.html"
     fields=["picture_title","picture_file"]
     def form_valid(self,form):
+        """
+            Metodo que complementa a criacao de um objecto Picture.
+        """
         form.instance.album_id = self.kwargs.get('pk')
         print(form.instance.album_id)
         
