@@ -14,3 +14,4 @@ def criarModels():
         if not GenreModel.objects.filter(name = genero):
             modelo = GenreModel(name = genero)
             modelo.save()
+

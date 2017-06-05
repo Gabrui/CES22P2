@@ -32,5 +32,5 @@ urlpatterns = [
         #FichaUsuario/grade/?P<string>[\w\-]+/$ (?P<anystring>.+)/
         url(r"^grade/(?P<string>.+)/$",views.SelectRandomImageView.as_view() ,name="grade"),
         #FichaUsuario/rank/?P<category>[\w\-]+/$/?P<filter>[\w\-]+/$
-        url(r"^rank/?P<category>[\w\-]+/$/?P<criteria>[\w\-]+/$",views.RankView.as_view(), name = "rank"),
+        url(r"^rank/(?P<category>.+)/(?P<criteria>.+)/$",views.RankView.as_view(), name = "rank"),
         ]
