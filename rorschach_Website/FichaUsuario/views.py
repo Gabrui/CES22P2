@@ -6,6 +6,7 @@ from .forms import UserForm, loginForm
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
 from .models import UserInfo, Album, Picture,Score, GenreModel
+from homepage.views import AuthUser
 import random
 # Create your views here.
 
@@ -135,7 +136,7 @@ class signUp(View):
 
 #random.randint(a,b)
 
-class SelectRandomImageView(View):
+class SelectRandomImageView(AuthUser,View):
     
     """
         Seleciona aleatoriamente imagens de uma categoria para colocar na tela
