@@ -5,7 +5,7 @@ from django.views.generic import View
 from .forms import UserForm, loginForm
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
-from .models import UserInfo, Album, Picture,Score
+from .models import UserInfo, Album, Picture,Score, GenreModel
 import random
 # Create your views here.
 
@@ -148,7 +148,8 @@ class SelectRandomImageView(View):
        return render(request,self.template_name, context=self.get_context_data(string))
     
     def get_context_data(self,string): 
-       listAlbum = Album.objects.filter(genre=string)
+       pkgenre = GenreModel.objects.get(name=string)
+       listAlbum = Album.objects.filter(genre=pkgenre)
        listPicture=[]
        for album in listAlbum: 
             listPicture += album.picture_set.all()
@@ -156,8 +157,8 @@ class SelectRandomImageView(View):
        if tamListPicture>0:
            dif = False
            while not dif:
-               firstImg = random.randint(0,tamListPicture)
-               secondImg = random.randint(0,tamListPicture)
+               firstImg = random.randint(0,tamListPicture-1)
+               secondImg = random.randint(0,tamListPicture-1)
                if firstImg!=secondImg:
                    dif = True
        context = {}
@@ -174,10 +175,11 @@ class SelectRandomImageView(View):
         picture = Picture.objects.get(pk = img_pk)
         user = self.request.user
         userInfo = user.userinfo
-        score = Score.objects.get(user=userInfo)
+        score = Score.objects.filter(user=userInfo, picture=picture)
         if score:
             
-            score.total_score+=1
+            
+            score[0].total_score+=1
             
         else:
             

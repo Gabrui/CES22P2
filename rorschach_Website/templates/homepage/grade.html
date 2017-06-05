@@ -16,6 +16,7 @@
     </head>
 <body>
     <form id="formulario" action="." method="POST">
+        {%csrf_token%}
         <input id="valor" type="hidden" name="pk" value =""/>
     </form>
 <div class="w3-container w3-teal">

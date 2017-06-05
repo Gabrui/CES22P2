@@ -44,7 +44,12 @@ class PerfilView(AuthUser, generic.DetailView):
     def get_object(self):
         self.all_albums = self.request.user.userinfo.album_set.all()
         return self.request.user.userinfo
-    
+    def get_context_data(self,**kwargs):
+        
+        context = super(PerfilView,self).get_context_data(**kwargs)
+        listCategory = GenreModel.objects.all()
+        context['listCategory'] = listCategory 
+        return context
     
 
 

@@ -130,8 +130,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
     
     <!-- Middle Column -->
     <div class="w3-col m7">
-    <button onclick="location.href='{% url 'FichaUsuario:grade' "tourist_hotspots" %}'" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Tourist HotSpots</button>
-          
+     {% for category in listCategory %}
+    <button onclick="location.href='{% url 'FichaUsuario:grade' category.name %}'" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> {{category.name}} </button>
+     {%endfor%}
           
       
     <!-- End Middle Column -->
