@@ -136,36 +136,37 @@ class signUp(View):
 #random.randint(a,b)
 
 class SelectRandomImageView(View):
-     """
-         Seleciona aleatoriamente imagens de uma categoria para colocar na tela
-         do usuario. Aumenta o score de uma imagem escolhida pelo usuario.
-     """
+    
+    """
+        Seleciona aleatoriamente imagens de uma categoria para colocar na tela
+        do usuario. Aumenta o score de uma imagem escolhida pelo usuario.
+    """
     template_name = "homepage/grade.html"
     
     def get(self,request,string):
         
-        return render(request,self.template_name, context=self.get_context_data(string))
+       return render(request,self.template_name, context=self.get_context_data(string))
     
     def get_context_data(self,string): 
-        listAlbum = Album.objects.filter(genre=string)
-        listPicture=[]
-        for album in listAlbum: 
-             listPicture += album.picture_set.all()
-        tamListPicture = len(listPicture)
-        if tamListPicture>0:
-            dif = False
-            while not dif:
-                firstImg = random.randint(0,tamListPicture)
-                secondImg = random.randint(0,tamListPicture)
-                if firstImg!=secondImg:
-                    dif = True
-        context = {}
-        context["img1"] = listPicture[firstImg].picture_file.url
-        context["img2"] = listPicture[secondImg].picture_file.url
-        context['pk1'] = listPicture[firstImg].pk
-        context['pk2'] = listPicture[secondImg].pk
+       listAlbum = Album.objects.filter(genre=string)
+       listPicture=[]
+       for album in listAlbum: 
+            listPicture += album.picture_set.all()
+       tamListPicture = len(listPicture)
+       if tamListPicture>0:
+           dif = False
+           while not dif:
+               firstImg = random.randint(0,tamListPicture)
+               secondImg = random.randint(0,tamListPicture)
+               if firstImg!=secondImg:
+                   dif = True
+       context = {}
+       context["img1"] = listPicture[firstImg].picture_file.url
+       context["img2"] = listPicture[secondImg].picture_file.url
+       context['pk1'] = listPicture[firstImg].pk
+       context['pk2'] = listPicture[secondImg].pk
         
-        return context
+       return context
         
     def post(self, request,string):
         
@@ -211,7 +212,7 @@ class RankView(View):
             listfinal = []
             
             if albumList:
-                for album in albumlist:
+                for album in albumList:
                 
                     pictureList = album.picture_set.all()
                     for picture in pictureList:

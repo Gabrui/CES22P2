@@ -72,7 +72,7 @@ class AlbumDetailView(AuthUser, generic.DetailView):
     template_name = "homepage/album.html"
     
     def get_context_data(self,**kwargs):
-        context = generic.DetailView(self).get_context_data(**kwargs)
+        context = super(AlbumDetailView,self).get_context_data(**kwargs)
         context['pk'] = self.request.user.pk
         context['album_title'] = self.object.album_title
         context['genre'] = self.object.genre
