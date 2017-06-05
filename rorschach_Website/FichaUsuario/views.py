@@ -198,6 +198,11 @@ class RankView(View):
             metodo que responde ao request GET. Retornando um template com as 
             imagens ordanadas por score.
         """
+       
+        return render(request,self.template_name, context=self.get_context_data(category))        
+    
+    def get_context_data(self,category):
+        
         SortedList=[]
         if category:
             
@@ -219,10 +224,7 @@ class RankView(View):
                 SortedList = sorted(listfinal, key=lambda x: x[0])
         context = {}
         context["SortedList"] = SortedList
-        return render(request,self.template_name, context=SortedList)        
-    
-    
-    
+        return context
     
 
 
