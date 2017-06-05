@@ -1,0 +1,8 @@
+<map id="homepage.views.AuthUser" name="homepage.views.AuthUser">
+<area shape="rect" id="node3" href="$classhomepage_1_1views_1_1AlbumAdder.html" title="homepage.views.AlbumAdder" alt="" coords="433,5,627,32"/>
+<area shape="rect" id="node4" href="$classhomepage_1_1views_1_1AlbumDetailView.html" title="homepage.views.AlbumDetailView" alt="" coords="418,56,642,83"/>
+<area shape="rect" id="node5" href="$classhomepage_1_1views_1_1PerfilView.html" title="homepage.views.PerfilView" alt="" coords="439,107,621,133"/>
+<area shape="rect" id="node6" href="$classhomepage_1_1views_1_1PictureAdder.html" title="homepage.views.PictureAdder" alt="" coords="431,157,629,184"/>
+<area shape="rect" id="node7" href="$classhomepage_1_1views_1_1PictureDetailView.html" title="homepage.views.PictureDetailView" alt="" coords="416,208,644,235"/>
+<area shape="rect" id="node8" href="$classhomepage_1_1views_1_1UpdateAccount.html" title="homepage.views.UpdateAccount" alt="" coords="423,259,637,285"/>
+</map>

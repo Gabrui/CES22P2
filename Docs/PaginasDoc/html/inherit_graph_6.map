@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classhomepage_1_1views_1_1AlbumAdder.html" title="homepage.views.AlbumAdder" alt="" coords="433,5,627,32"/>
+<area shape="rect" id="node3" href="$classhomepage_1_1views_1_1PictureAdder.html" title="homepage.views.PictureAdder" alt="" coords="431,56,629,83"/>
+<area shape="rect" id="node5" href="$classhomepage_1_1views_1_1AuthUser.html" title="homepage.views.AuthUser" alt="" coords="189,107,368,133"/>
+<area shape="rect" id="node6" href="$classhomepage_1_1views_1_1AlbumDetailView.html" title="homepage.views.AlbumDetailView" alt="" coords="418,107,642,133"/>
+<area shape="rect" id="node7" href="$classhomepage_1_1views_1_1PerfilView.html" title="homepage.views.PerfilView" alt="" coords="439,157,621,184"/>
+<area shape="rect" id="node8" href="$classhomepage_1_1views_1_1PictureDetailView.html" title="homepage.views.PictureDetailView" alt="" coords="416,208,644,235"/>
+<area shape="rect" id="node9" href="$classhomepage_1_1views_1_1UpdateAccount.html" title="homepage.views.UpdateAccount" alt="" coords="423,259,637,285"/>
+</map>
