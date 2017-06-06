@@ -95,7 +95,7 @@ class Album (models.Model):
         return reverse("homepage:perfil")
     
     def __str__(self):
-        return self.album_title + " owner " + self.user.username
+        return self.album_title + " owner " + self.user.user.email
 #------------------------------Fim da Classe Album-----------------------------
 
 

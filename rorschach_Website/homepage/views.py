@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import generic
 from FichaUsuario.models import UserInfo, Album, Picture, GenreModel
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # Create your views here.
 #This File receive client request and send back the response
@@ -27,7 +27,7 @@ class SendTemplateView(View):
 
 
 class AuthUser(LoginRequiredMixin):
-    login_url = "/loginUser"
+    login_url = "/loginUser/"
     redirect_field_name = ""
 
 
@@ -77,7 +77,7 @@ class UpdateAccount(AuthUser, UpdateView):
     
     
     
-class AlbumDetailView(AuthUser, generic.DetailView):
+class AlbumDetailView(UserPassesTestMixin,AuthUser, generic.DetailView):
     """
      Mostra informacoes do album   
     """
@@ -101,8 +101,11 @@ class AlbumDetailView(AuthUser, generic.DetailView):
         context["all_picture"] = self.object.picture_set.all()
         #retorna o dicionario com as variaveis e seus valores
         return context
-
-
+    def test_func(self):
+        self.object = self.get_object()
+        print(self.object.user.user.pk)
+        print(self.request.user.pk)
+        return self.request.user.pk == self.object.user.user.pk
 
 
 class AlbumAdder(AuthUser, CreateView):
